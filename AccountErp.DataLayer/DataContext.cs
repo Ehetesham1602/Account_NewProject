@@ -41,6 +41,7 @@ namespace AccountErp.DataLayer
         public DbSet<Transaction> Transaction { get; set; }
         public DbSet<Reconciliation> Reconciliation { get; set; }
         public DbSet<EndingStatementBalance> EndingStatementBalance { get; set; }
+        public DbSet<Product> Product { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -74,6 +75,7 @@ namespace AccountErp.DataLayer
             modelBuilder.ApplyConfiguration(new TransactionConfiguration());
             modelBuilder.ApplyConfiguration(new ReconciliationConfigurations());
             modelBuilder.ApplyConfiguration(new EndingStatementBalanceConfiguration());
+            modelBuilder.ApplyConfiguration(new ProductConfiguration());
 
 
         }
