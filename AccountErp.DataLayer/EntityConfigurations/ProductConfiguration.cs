@@ -30,6 +30,9 @@ namespace AccountErp.DataLayer.EntityConfigurations
             builder.Property(x => x.UpdatedBy).HasMaxLength(40);
             builder.Property(x => x.BankAccountId).IsRequired(false);
             builder.Property(x => x.InitialStock).IsRequired(false);
+            builder.Property(x => x.ProductCategoryId).IsRequired(false);
+
+            builder.HasOne(x => x.Category).WithMany().HasForeignKey(x => x.ProductCategoryId);
 
         }
     }

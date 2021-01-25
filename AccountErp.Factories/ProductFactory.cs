@@ -23,7 +23,8 @@ namespace AccountErp.Factories
                 Status = Constants.RecordStatus.Active,
                 CreatedBy = userId ?? "0",
                 CreatedOn = Utility.GetDateTime(),
-                BankAccountId = model.BankAccountId
+                BankAccountId = model.BankAccountId,
+                ProductCategoryId = model.ProductCategoryId
             };
             return prod;
         }
@@ -39,6 +40,7 @@ namespace AccountErp.Factories
             entity.InitialStock = model.InitialStock;
             entity.UpdatedOn = Utility.GetDateTime();
             entity.BankAccountId = model.BankAccountId;
+            entity.ProductCategoryId = model.ProductCategoryId;
         }
     }
 }

@@ -15,6 +15,10 @@
     <Compile Remove="Migrations\20201117093312_serverdbupdate17Nov2020.Designer.cs" />
     <Compile Remove="Migrations\20201217095610_recocilationupdate12-17-2020.cs" />
     <Compile Remove="Migrations\20201217095610_recocilationupdate12-17-2020.Designer.cs" />
+    <Compile Remove="Migrations\20210125105901_categoryAdd.cs" />
+    <Compile Remove="Migrations\20210125105901_categoryAdd.Designer.cs" />
+    <Compile Remove="Migrations\20210125111033_categoryAdd.cs" />
+    <Compile Remove="Migrations\20210125111033_categoryAdd.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -59,7 +59,9 @@ namespace AccountErp.DataLayer.Repositories
                               IsTaxable = s.IsTaxable,
                               TaxCode = s.SalesTax.Code,
                               Status = s.Status,
-                              BankAccountId = s.BankAccountId
+                              BankAccountId = s.BankAccountId,
+                              ProductCategoryId = s.ProductCategoryId,
+                              CayegoryName = s.Category.Name
                           })
                           .AsNoTracking()
                           .SingleOrDefaultAsync();
@@ -90,7 +92,9 @@ namespace AccountErp.DataLayer.Repositories
                               Status = s.Status,
                               SalesTaxId = s.SalesTaxId,
                               BankAccountId = s.BankAccountId,
-                              TaxBankAccountId = c.BankAccountId
+                              TaxBankAccountId = c.BankAccountId,
+                              ProductCategoryId = s.ProductCategoryId,
+                              CayegoryName = s.Category.Name
                           })
                           .AsNoTracking()
                             .ToListAsync();
@@ -110,7 +114,9 @@ namespace AccountErp.DataLayer.Repositories
                               BuyingPrice = s.BuyingPrice,
                               SellingPrice = s.SellingPrice,
                               InitialStock = s.InitialStock,
-                              BankAccountId = s.BankAccountId
+                              BankAccountId = s.BankAccountId,
+                              ProductCategoryId = s.ProductCategoryId,
+                              CayegoryName = s.Category.Name
                           })
                          .AsNoTracking()
                          .SingleOrDefaultAsync();
@@ -141,7 +147,9 @@ namespace AccountErp.DataLayer.Repositories
                                 Status = s.Status,
                                 TaxCode = s.SalesTax.Code,
                                 TaxPercentage = s.SalesTax.TaxPercentage,
-                                BankAccountId = s.BankAccountId
+                                BankAccountId = s.BankAccountId,
+                                ProductCategoryId = s.ProductCategoryId,
+                                CayegoryName = s.Category.Name
                             })
                             .AsNoTracking();
 

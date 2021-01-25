@@ -21,7 +21,9 @@ namespace AccountErp.Entities
         public decimal SellingPrice { get; set; }
         public decimal BuyingPrice { get; set; }
         public int? BankAccountId { get; set; }
-
+        public int? ProductCategoryId { get; set; }
+        public ProductCategory Category { get; set; }
         public SalesTax SalesTax { get; set; }
+
     }
 }

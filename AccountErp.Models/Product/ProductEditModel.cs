@@ -19,5 +19,6 @@ namespace AccountErp.Models.Product
         public int? InitialStock { get; set; }
         public decimal SellingPrice { get; set; }
         public decimal BuyingPrice { get; set; }
+        public int? ProductCategoryId { get; set; }
     }
 }
