@@ -4,14 +4,16 @@ using AccountErp.DataLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AccountErp.DataLayer.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20210127063538_invoiceChange27012021")]
+    partial class invoiceChange27012021
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -185,8 +187,6 @@ namespace AccountErp.DataLayer.Migrations
 
                     b.Property<string>("BillNumber");
 
-                    b.Property<int>("BillType");
-
                     b.Property<string>("CreatedBy")
                         .IsRequired()
                         .HasMaxLength(40);
@@ -281,15 +281,13 @@ namespace AccountErp.DataLayer.Migrations
 
                     b.Property<int>("BillId");
 
-                    b.Property<int?>("ItemId");
+                    b.Property<int>("ItemId");
 
                     b.Property<decimal>("LineAmount")
                         .HasColumnType("NUMERIC(12,2)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("NUMERIC(10,2)");
-
-                    b.Property<int?>("ProductId");
 
                     b.Property<int>("Quantity");
 
@@ -308,8 +306,6 @@ namespace AccountErp.DataLayer.Migrations
                     b.HasIndex("BillId");
 
                     b.HasIndex("ItemId");
-
-                    b.HasIndex("ProductId");
 
                     b.HasIndex("TaxId");
 
@@ -1553,11 +1549,8 @@ namespace AccountErp.DataLayer.Migrations
 
                     b.HasOne("AccountErp.Entities.Item", "Item")
                         .WithMany()
-                        .HasForeignKey("ItemId");
-
-                    b.HasOne("AccountErp.Entities.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("AccountErp.Entities.SalesTax", "Taxes")
                         .WithMany()
