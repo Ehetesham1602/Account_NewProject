@@ -30,6 +30,7 @@ namespace AccountErp.Entities
         public decimal? SubTotal { get; set; }
         public decimal? LineAmountSubTotal { get; set; }
         public Vendor Vendor { get; set; }
+        public Constants.InvoiceType BillType { get; set; }
         public ICollection<BillItem> Items { get; set; }
         public ICollection<BillAttachment> Attachments { get; set; }
     }

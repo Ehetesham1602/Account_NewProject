@@ -6,7 +6,8 @@ namespace AccountErp.Entities
     {
         public Guid Id { get; set; }
         public int InvoiceId { get; set; }
-        public int ServiceId { get; set; }
+        public int? ServiceId { get; set; }
+        public int? ProductId { get; set; }
         public decimal Rate { get; set; }
         public decimal Price { get; set; }
         public int? TaxId { get; set; }
@@ -16,6 +17,7 @@ namespace AccountErp.Entities
         public int Quantity { get; set; }
 
         public Item Service { get; set; }
+        public Product Product { get; set; }
         public SalesTax Taxes { get; set; }
     }
 }

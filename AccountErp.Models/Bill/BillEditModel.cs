@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AccountErp.Utilities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -23,6 +24,7 @@ namespace AccountErp.Models.Bill
         public decimal? PoSoNumber { get; set; }
         public decimal? SubTotal { get; set; }
         public decimal? LineAmountSubTotal { get; set; }
+        public Constants.InvoiceType BillType { get; set; }
         [Required]
         public List<BillServiceModel> Items { get; set; }
         public IList<BillAttachmentModel> Attachments { get; set; }

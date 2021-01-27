@@ -23,6 +23,7 @@ namespace AccountErp.Dtos.Invoice
         public string Description { get; set; }
         public decimal? SubTotal { get; set; }
         public Constants.InvoiceStatus Status { get; set; }
+        public Constants.InvoiceType InvoiceType { get; set; }
         public DateTime CreatedOn { get; set; }
     }
 }

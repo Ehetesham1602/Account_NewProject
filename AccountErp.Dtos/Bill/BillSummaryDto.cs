@@ -23,6 +23,7 @@ namespace AccountErp.Dtos.Bill
         public decimal? SubTotal { get; set; }
         public string RefrenceNumber { get; set; }
         public Constants.BillStatus status { get; set; }
+        public Constants.InvoiceType BillType { get; set; }
 
     }
 }
