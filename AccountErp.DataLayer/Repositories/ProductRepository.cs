@@ -149,7 +149,10 @@ namespace AccountErp.DataLayer.Repositories
                                 TaxPercentage = s.SalesTax.TaxPercentage,
                                 BankAccountId = s.BankAccountId,
                                 ProductCategoryId = s.ProductCategoryId,
-                                CayegoryName = s.Category.Name
+                                CayegoryName = s.Category.Name,
+                                CreatedOn=s.CreatedOn
+                                
+                                
                             })
                             .AsNoTracking();
 
@@ -163,6 +166,53 @@ namespace AccountErp.DataLayer.Repositories
             };
             return pagedResult;
         }
+
+        public async Task<JqDataTableResponse<ProductListItemDto>> GetInventoryPagedResultAsync(ProductInventoryJqDataTableRequestModel model)
+        {
+            if (model.Length == 0)
+            {
+                model.Length = Constants.DefaultPageSize;
+            }
+
+            var filterKey = model.Search.Value;
+
+            var linqStmt = (from s in _dataContext.Product
+                            where s.Status != Constants.RecordStatus.Deleted
+                                && (model.FilterKey == null
+                                || EF.Functions.Like(s.Name, "%" + model.FilterKey + "%")
+                                || EF.Functions.Like(s.Description, "%" + model.FilterKey + "%"))
+                                && (s.CreatedOn>=model.StartDate && s.CreatedOn<=model.EndDate)
+                            select new ProductListItemDto
+                            {
+                                Id = s.Id,
+                                Name = s.Name,
+                                BuyingPrice = s.BuyingPrice,
+                                SellingPrice = s.SellingPrice,
+                                InitialStock = s.InitialStock,
+                                Description = s.Description ?? "",
+                                Status = s.Status,
+                                TaxCode = s.SalesTax.Code,
+                                TaxPercentage = s.SalesTax.TaxPercentage,
+                                BankAccountId = s.BankAccountId,
+                                ProductCategoryId = s.ProductCategoryId,
+                                CayegoryName = s.Category.Name,
+                                CreatedOn = s.CreatedOn
+
+
+                            })
+                            .AsNoTracking();
+
+            var sortExpresstion = model.GetSortExpression();
+
+            var pagedResult = new JqDataTableResponse<ProductListItemDto>
+            {
+                RecordsTotal = await _dataContext.Product.CountAsync(x => x.Status != Constants.RecordStatus.Deleted),
+                RecordsFiltered = await linqStmt.CountAsync(),
+                Data = await linqStmt.OrderBy(sortExpresstion).Skip(model.Start).Take(model.Length).ToListAsync()
+            };
+            return pagedResult;
+        }
+
 
         public async Task<IEnumerable<SelectListItemDto>> GetSelectItemsAsync()
         {

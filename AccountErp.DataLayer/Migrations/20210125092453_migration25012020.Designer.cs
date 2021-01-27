@@ -4,14 +4,16 @@ using AccountErp.DataLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AccountErp.DataLayer.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20210125092453_migration25012020")]
+    partial class migration25012020
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -870,8 +872,6 @@ namespace AccountErp.DataLayer.Migrations
                         .IsRequired()
                         .HasMaxLength(250);
 
-                    b.Property<int?>("ProductCategoryId");
-
                     b.Property<int?>("SalesTaxId");
 
                     b.Property<decimal>("SellingPrice")
@@ -886,39 +886,9 @@ namespace AccountErp.DataLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductCategoryId");
-
                     b.HasIndex("SalesTaxId");
 
                     b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("AccountErp.Entities.ProductCategory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasMaxLength(40);
-
-                    b.Property<DateTime>("CreatedOn");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(250);
-
-                    b.Property<int>("Status");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasMaxLength(40);
-
-                    b.Property<DateTime?>("UpdatedOn");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Productcategory");
                 });
 
             modelBuilder.Entity("AccountErp.Entities.Quotation", b =>
@@ -1658,10 +1628,6 @@ namespace AccountErp.DataLayer.Migrations
 
             modelBuilder.Entity("AccountErp.Entities.Product", b =>
                 {
-                    b.HasOne("AccountErp.Entities.ProductCategory", "Category")
-                        .WithMany()
-                        .HasForeignKey("ProductCategoryId");
-
                     b.HasOne("AccountErp.Entities.SalesTax", "SalesTax")
                         .WithMany()
                         .HasForeignKey("SalesTaxId");

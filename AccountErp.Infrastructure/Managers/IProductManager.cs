@@ -21,6 +21,9 @@ namespace AccountErp.Infrastructure.Managers
 
         Task<JqDataTableResponse<ProductListItemDto>> GetPagedResultAsync(ProductJqDataTableRequestModel model);
 
+        Task<JqDataTableResponse<ProductListItemDto>> GetInventoryPagedResultAsync(ProductInventoryJqDataTableRequestModel model);
+
+
         Task<IEnumerable<ProductDetailDto>> GetAllAsync(Constants.RecordStatus? status = null);
 
         //Task<IEnumerable<ProductDetailDto>> GetAllForSalesAsync(Constants.RecordStatus? status = null);

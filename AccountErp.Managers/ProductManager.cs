@@ -55,6 +55,11 @@ namespace AccountErp.Managers
             return await _repository.GetPagedResultAsync(model);
         }
 
+        public async Task<JqDataTableResponse<ProductListItemDto>> GetInventoryPagedResultAsync(ProductInventoryJqDataTableRequestModel model)
+        {
+            return await _repository.GetInventoryPagedResultAsync(model);
+        }
+
         public async Task<IEnumerable<SelectListItemDto>> GetSelectItemsAsync()
         {
             return await _repository.GetSelectItemsAsync();

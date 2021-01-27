@@ -22,5 +22,8 @@ namespace AccountErp.Dtos.Product
         public string CayegoryName { get; set; }
         public int? ProductCategoryId { get; set; }
         public Constants.RecordStatus Status { get; set; }
+
+        public DateTime CreatedOn { get; set; }
+
     }
 }
