@@ -32,6 +32,9 @@ namespace AccountErp.Infrastructure.Repositories
 
         Task<JqDataTableResponse<ProductListItemDto>> GetPagedResultAsync(ProductJqDataTableRequestModel model);
 
+        Task<JqDataTableResponse<ProductListItemDto>> GetInventoryPagedResultAsync(ProductInventoryJqDataTableRequestModel model);
+
+
         Task<IEnumerable<SelectListItemDto>> GetSelectItemsAsync();
 
         Task ToggleStatusAsync(int id);

@@ -94,6 +94,15 @@ namespace AccountErp.Api.Controllers
             return Ok(pagedResult);
         }
 
+
+        [HttpPost]
+        [Route("Get-Inventory-paged-result")]
+        public async Task<IActionResult> GetInventoryPagedResultAsync(ProductInventoryJqDataTableRequestModel model)
+        {
+            var pagedResult = await _manager.GetInventoryPagedResultAsync(model);
+            return Ok(pagedResult);
+        }
+
         [HttpGet]
         [Route("get-all-active-only")]
         public async Task<IActionResult> GetAllActiveOnly()
