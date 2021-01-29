@@ -41,5 +41,6 @@ namespace AccountErp.Infrastructure.Repositories
 
         Task DeleteAsync(int id);
         bool checkItemAvailable(int id);
+        Task TransferWareHouse(int id, int warehouseId);
     }
 }

@@ -140,5 +140,13 @@ namespace AccountErp.Api.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("transferWarehouse")]
+        public async Task<IActionResult> TranserWareHouse(int id,int wareHouseId)
+        {
+            await _manager.TransferWareHouse(id, wareHouseId);
+            return Ok();
+        }
+
     }
 }

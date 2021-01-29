@@ -24,7 +24,8 @@ namespace AccountErp.Factories
                 CreatedBy = userId ?? "0",
                 CreatedOn = Utility.GetDateTime(),
                 BankAccountId = model.BankAccountId,
-                ProductCategoryId = model.ProductCategoryId
+                ProductCategoryId = model.ProductCategoryId,
+                WareHouseId = model.WarehouseId
             };
             return prod;
         }
@@ -41,6 +42,7 @@ namespace AccountErp.Factories
             entity.UpdatedOn = Utility.GetDateTime();
             entity.BankAccountId = model.BankAccountId;
             entity.ProductCategoryId = model.ProductCategoryId;
+            entity.WareHouseId = model.WarehouseId;
         }
     }
 }

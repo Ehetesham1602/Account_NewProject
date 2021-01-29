@@ -896,11 +896,15 @@ namespace AccountErp.DataLayer.Migrations
 
                     b.Property<DateTime?>("UpdatedOn");
 
+                    b.Property<int?>("WareHouseId");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ProductCategoryId");
 
                     b.HasIndex("SalesTaxId");
+
+                    b.HasIndex("WareHouseId");
 
                     b.ToTable("Products");
                 });
@@ -1715,6 +1719,10 @@ namespace AccountErp.DataLayer.Migrations
                     b.HasOne("AccountErp.Entities.SalesTax", "SalesTax")
                         .WithMany()
                         .HasForeignKey("SalesTaxId");
+
+                    b.HasOne("AccountErp.Entities.WareHouse", "Warehouse")
+                        .WithMany()
+                        .HasForeignKey("WareHouseId");
                 });
 
             modelBuilder.Entity("AccountErp.Entities.Quotation", b =>
