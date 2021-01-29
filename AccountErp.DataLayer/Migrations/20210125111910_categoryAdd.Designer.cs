@@ -4,14 +4,16 @@ using AccountErp.DataLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AccountErp.DataLayer.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20210125111910_categoryAdd")]
+    partial class categoryAdd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -185,8 +187,6 @@ namespace AccountErp.DataLayer.Migrations
 
                     b.Property<string>("BillNumber");
 
-                    b.Property<int>("BillType");
-
                     b.Property<string>("CreatedBy")
                         .IsRequired()
                         .HasMaxLength(40);
@@ -281,15 +281,13 @@ namespace AccountErp.DataLayer.Migrations
 
                     b.Property<int>("BillId");
 
-                    b.Property<int?>("ItemId");
+                    b.Property<int>("ItemId");
 
                     b.Property<decimal>("LineAmount")
                         .HasColumnType("NUMERIC(12,2)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("NUMERIC(10,2)");
-
-                    b.Property<int?>("ProductId");
 
                     b.Property<int>("Quantity");
 
@@ -308,8 +306,6 @@ namespace AccountErp.DataLayer.Migrations
                     b.HasIndex("BillId");
 
                     b.HasIndex("ItemId");
-
-                    b.HasIndex("ProductId");
 
                     b.HasIndex("TaxId");
 
@@ -616,8 +612,6 @@ namespace AccountErp.DataLayer.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
-                    b.Property<int>("InvoiceType");
-
                     b.Property<decimal?>("LineAmountSubTotal")
                         .HasColumnType("NUMERIC(12,2)");
 
@@ -748,14 +742,12 @@ namespace AccountErp.DataLayer.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("NUMERIC(12,2)");
 
-                    b.Property<int?>("ProductId");
-
                     b.Property<int>("Quantity");
 
                     b.Property<decimal>("Rate")
                         .HasColumnType("NUMERIC(12,2)");
 
-                    b.Property<int?>("ServiceId");
+                    b.Property<int>("ServiceId");
 
                     b.Property<int?>("TaxId");
 
@@ -768,8 +760,6 @@ namespace AccountErp.DataLayer.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("InvoiceId");
-
-                    b.HasIndex("ProductId");
 
                     b.HasIndex("ServiceId");
 
@@ -1400,38 +1390,6 @@ namespace AccountErp.DataLayer.Migrations
                     b.ToTable("Vendors");
                 });
 
-            modelBuilder.Entity("AccountErp.Entities.WareHouse", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasMaxLength(40);
-
-                    b.Property<DateTime>("CreatedOn");
-
-                    b.Property<string>("Location")
-                        .IsRequired()
-                        .HasMaxLength(1000);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(250);
-
-                    b.Property<int>("Status");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasMaxLength(40);
-
-                    b.Property<DateTime?>("UpdatedOn");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("WareHouse");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -1585,11 +1543,8 @@ namespace AccountErp.DataLayer.Migrations
 
                     b.HasOne("AccountErp.Entities.Item", "Item")
                         .WithMany()
-                        .HasForeignKey("ItemId");
-
-                    b.HasOne("AccountErp.Entities.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("AccountErp.Entities.SalesTax", "Taxes")
                         .WithMany()
@@ -1686,13 +1641,10 @@ namespace AccountErp.DataLayer.Migrations
                         .HasForeignKey("InvoiceId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("AccountErp.Entities.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId");
-
                     b.HasOne("AccountErp.Entities.Item", "Service")
                         .WithMany()
-                        .HasForeignKey("ServiceId");
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("AccountErp.Entities.SalesTax", "Taxes")
                         .WithMany()

@@ -6,7 +6,8 @@ namespace AccountErp.Models.Invoice
 {
     public class InvoiceServiceModel
     {
-        public int ServiceId { get; set; }
+        public int? ServiceId { get; set; }
+        public int? ProductId { get; set; }
         public decimal Rate { get; set; }
         public decimal Price { get; set; }
         public int? TaxId { get; set; }

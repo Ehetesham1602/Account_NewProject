@@ -63,6 +63,7 @@ namespace AccountErp.DataLayer.Repositories
                                      PoSoNumber = i.PoSoNumber,
                                      InvoiceNumber = i.InvoiceNumber,
                                      SubTotal = i.SubTotal,
+                                     InvoiceType = i.InvoiceType,
                                      Customer = new CustomerDetailDto
                                      {
                                          FirstName = c.FirstName,
@@ -80,9 +81,9 @@ namespace AccountErp.DataLayer.Repositories
                                              PostalCode = c.Address.PostalCode
                                          }
                                      },
-                                     Items = i.Services.Select(x => new InvoiceServiceDto
+                                     Items = i.InvoiceType == 0 ? i.Services.Select(x => new InvoiceServiceDto
                                      {
-                                         Id = x.ServiceId,
+                                         Id = x.ServiceId ?? 0,
                                          Type = x.Service.Name,
                                          Rate = x.Rate,
                                          Name = x.Service.Name,
@@ -95,7 +96,26 @@ namespace AccountErp.DataLayer.Repositories
                                          LineAmount = x.LineAmount,
                                          BankAccountId = x.Service.BankAccountId,
                                          TaxBankAccountId = x.Taxes.BankAccountId
-                                     }),
+                                     }) :
+
+
+                                      i.Services.Select(x => new InvoiceServiceDto
+                                      {
+                                          Id = x.ProductId ?? 0,
+                                          Type = x.Product.Name,
+                                          Rate = x.Rate,
+                                          Name = x.Product.Name,
+                                          Description = x.Product.Description,
+                                          Quantity = x.Quantity,
+                                          Price = x.Price,
+                                          TaxId = x.TaxId,
+                                          TaxPrice = x.TaxPrice,
+                                          TaxPercentage = x.TaxPercentage,
+                                          LineAmount = x.LineAmount,
+                                          BankAccountId = x.Product.BankAccountId,
+                                          TaxBankAccountId = x.Product.BankAccountId
+                                      })
+                                     ,
                                      Attachments = i.Attachments.Select(x => new InvoiceAttachmentDto
                                      {
                                          Id = x.Id,
@@ -131,15 +151,16 @@ namespace AccountErp.DataLayer.Repositories
                               PoSoNumber = i.PoSoNumber,
                               InvoiceNumber = i.InvoiceNumber,
                               SubTotal = i.SubTotal,
+                              InvoiceType = i.InvoiceType,
                               Customer = new CustomerDetailDto
                               {
                                   FirstName = c.FirstName,
                                   LastName = c.LastName,
                                   Phone = c.Phone
                               },
-                              Items = i.Services.Select(x => new InvoiceServiceDto
+                              Items = i.InvoiceType == 0 ? i.Services.Select(x => new InvoiceServiceDto
                               {
-                                  Id = x.ServiceId,
+                                  Id = x.ServiceId ?? 0,
                                   Type = x.Service.Name,
                                   Rate = x.Rate,
                                   Name = x.Service.Name,
@@ -152,7 +173,26 @@ namespace AccountErp.DataLayer.Repositories
                                   LineAmount = x.LineAmount,
                                   BankAccountId = x.Service.BankAccountId,
                                   TaxBankAccountId = x.Taxes.BankAccountId
-                              }),
+                              }) :
+
+
+                                      i.Services.Select(x => new InvoiceServiceDto
+                                      {
+                                          Id = x.ProductId ?? 0,
+                                          Type = x.Product.Name,
+                                          Rate = x.Rate,
+                                          Name = x.Product.Name,
+                                          Description = x.Product.Description,
+                                          Quantity = x.Quantity,
+                                          Price = x.Price,
+                                          TaxId = x.TaxId,
+                                          TaxPrice = x.TaxPrice,
+                                          TaxPercentage = x.TaxPercentage,
+                                          LineAmount = x.LineAmount,
+                                          BankAccountId = x.Product.BankAccountId,
+                                          TaxBankAccountId = x.Product.BankAccountId
+                                      })
+                                     ,
                               Attachments = i.Attachments.Select(x => new InvoiceAttachmentDto
                               {
                                   Id = x.Id,
@@ -196,7 +236,8 @@ namespace AccountErp.DataLayer.Repositories
                                 CreatedOn = i.CreatedOn,
                                 Status = i.Status,
                                 InvoiceNumber = i.InvoiceNumber,
-                                SubTotal = i.SubTotal
+                                SubTotal = i.SubTotal,
+                                InvoiceType = i.InvoiceType
                             })
                             .AsNoTracking();
 
@@ -350,7 +391,8 @@ namespace AccountErp.DataLayer.Repositories
                               DueDate = i.DueDate,
                               StrDueDate = i.StrDueDate,
                               PoSoNumber = i.PoSoNumber,
-                              InvoiceNumber = i.InvoiceNumber
+                              InvoiceNumber = i.InvoiceNumber,
+                              InvoiceType = i.InvoiceType
                           })
                           .AsNoTracking()
                           .SingleOrDefaultAsync();

@@ -150,9 +150,9 @@ namespace AccountErp.DataLayer.Repositories
                                 BankAccountId = s.BankAccountId,
                                 ProductCategoryId = s.ProductCategoryId,
                                 CayegoryName = s.Category.Name,
-                                CreatedOn=s.CreatedOn
-                                
-                                
+                                CreatedOn = s.CreatedOn
+
+
                             })
                             .AsNoTracking();
 
@@ -181,7 +181,7 @@ namespace AccountErp.DataLayer.Repositories
                                 && (model.FilterKey == null
                                 || EF.Functions.Like(s.Name, "%" + model.FilterKey + "%")
                                 || EF.Functions.Like(s.Description, "%" + model.FilterKey + "%"))
-                                && (s.CreatedOn>=model.StartDate && s.CreatedOn<=model.EndDate)
+                                && ((model.StartDate == null || s.CreatedOn>=model.StartDate) && (model.EndDate == null || s.CreatedOn<=model.EndDate))
                             select new ProductListItemDto
                             {
                                 Id = s.Id,

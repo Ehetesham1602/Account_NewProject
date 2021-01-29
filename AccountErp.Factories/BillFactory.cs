@@ -33,9 +33,11 @@ namespace AccountErp.Factories
                 Notes = model.Notes,
                 SubTotal = model.SubTotal,
                 LineAmountSubTotal = model.LineAmountSubTotal,
+                BillType = model.BillType,
                 Items = model.Items.Select(x => new BillItem
                 {
                     Id = Guid.NewGuid(),
+                    ProductId = x.ProductId,
                     ItemId = x.ItemId,
                     Rate = x.Rate,
                     Price = x.Price,
@@ -92,8 +94,20 @@ namespace AccountErp.Factories
           
             foreach (var item in model.Items)
             {
-                tempArr.Add(item.ItemId);
-                var alreadyExistServices = bill.Items.Where(x => item.ItemId == x.ItemId).FirstOrDefault();
+                var alreadyExistServices = new BillItem();
+                if (model.BillType == 0)
+                {
+                    tempArr.Add(item.ItemId);
+                    alreadyExistServices = bill.Items.Where(x => item.ItemId == x.ItemId).FirstOrDefault();
+                }
+                else
+                {
+                    tempArr.Add(item.ProductId);
+                    alreadyExistServices = bill.Items.Where(x => item.ItemId == x.ProductId).FirstOrDefault();
+                }
+
+                //tempArr.Add(item.ItemId);
+                //var alreadyExistServices = bill.Items.Where(x => item.ItemId == x.ItemId).FirstOrDefault();
                 if (alreadyExistServices != null)
                 {
                     alreadyExistServices.Price = item.Price;
@@ -107,7 +121,18 @@ namespace AccountErp.Factories
                 }
             }
 
-            var deletedServices = bill.Items.Where(x => !tempArr.Contains(x.ItemId)).ToList();
+            var deletedServices = new List<BillItem>();
+            if (model.BillType == 0)
+            {
+                deletedServices = bill.Items.Where(x => !tempArr.Contains(x.ItemId)).ToList();
+            }
+            else
+            {
+                deletedServices = bill.Items.Where(x => !tempArr.Contains(x.ProductId)).ToList();
+            }
+
+
+           // var deletedServices = bill.Items.Where(x => !tempArr.Contains(x.ItemId)).ToList();
             //var alreadyExistServices = entity.Services.Where(x => tempArr.Contains(x.ServiceId)).ToList();
             //var resultAll = items.Where(i => filter.All(x => i.Features.Any(f => x == f.Id)));
 
@@ -117,9 +142,23 @@ namespace AccountErp.Factories
                 bill.Items.Remove(deletedService);
             }
 
-            var addedServices = model.Items
-                .Where(x => !bill.Items.Select(y => y.ItemId).Contains(x.ItemId))
+            var addedServices = new List<BillServiceModel>();
+            if (model.BillType == 0)
+            {
+                addedServices = model.Items
+               .Where(x => !bill.Items.Select(y => y.ItemId).Contains(x.ItemId))
+               .ToList();
+            }
+            else
+            {
+                addedServices = model.Items
+                .Where(x => !bill.Items.Select(y => y.ProductId).Contains(x.ItemId))
                 .ToList();
+            }
+
+            //var addedServices = model.Items
+            //    .Where(x => !bill.Items.Select(y => y.ItemId).Contains(x.ItemId))
+            //    .ToList();
 
             foreach (var service in addedServices)
             {

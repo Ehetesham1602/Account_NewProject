@@ -6,7 +6,8 @@ namespace AccountErp.Models.Bill
 {
     public class BillServiceModel
     {
-        public int ItemId { get; set; }
+        public int? ItemId { get; set; }
+        public int? ProductId { get; set; }
         public decimal Rate { get; set; }
         public decimal Price { get; set; }
         public int? TaxId { get; set; }

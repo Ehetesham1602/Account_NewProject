@@ -77,7 +77,8 @@ namespace AccountErp.DataLayer.Repositories
                                 Notes = b.Notes,
                                 BillNumber = b.BillNumber,
                                 SubTotal = b.SubTotal,
-                                RefrenceNumber = b.RefrenceNumber
+                                RefrenceNumber = b.RefrenceNumber,
+                                BillType = b.BillType
 
                             })
                             .AsNoTracking();
@@ -132,7 +133,8 @@ namespace AccountErp.DataLayer.Repositories
                                 Notes = b.Notes,
                                 BillNumber = b.BillNumber,
                                 SubTotal = b.SubTotal,
-                                RefrenceNumber = b.RefrenceNumber
+                                RefrenceNumber = b.RefrenceNumber,
+                                BillType = b.BillType
 
                             })
                             .AsNoTracking().Take(5);
@@ -172,7 +174,8 @@ namespace AccountErp.DataLayer.Repositories
                                 BillNumber = e.BillNumber,
                                 PoSoNumber = e.PoSoNumber,
                                 SubTotal = e.SubTotal,
-                                RefrenceNumber = e.RefrenceNumber
+                                RefrenceNumber = e.RefrenceNumber,
+                                BillType = e.BillType
                             })
                             .AsNoTracking();
 
@@ -181,7 +184,7 @@ namespace AccountErp.DataLayer.Repositories
 
         public async Task<BillDetailDto> GetDetailAsync(int id)
         {
-            return await (from b in _dataContext.Bills
+            var bill = await (from b in _dataContext.Bills
                           join v in _dataContext.Vendors
                           on b.VendorId equals v.Id
                           where b.Id == id
@@ -206,6 +209,7 @@ namespace AccountErp.DataLayer.Repositories
                               PoSoNumber = b.PoSoNumber,
                               SubTotal = b.SubTotal,
                               RefrenceNumber = b.RefrenceNumber,
+                              BillType = b.BillType,
                               Vendor = new VendorPersonallnfoDto
                               {
                                   Name = v.Name,
@@ -214,9 +218,9 @@ namespace AccountErp.DataLayer.Repositories
                                   Phone = v.Phone,
                                   Discount = v.Discount
                               },
-                              Items = b.Items.Select(x => new BillServiceDto
+                              Items = b.BillType == 0 ? b.Items.Select(x => new BillServiceDto
                               {
-                                  Id = x.ItemId,
+                                  Id = x.ItemId ?? 0,
                                   Type = x.Item.Name,
                                   Rate = x.Rate,
                                   Name = x.Item.Name,
@@ -231,7 +235,26 @@ namespace AccountErp.DataLayer.Repositories
                                   TaxBankAccountId = x.Taxes.BankAccountId
                                   
 
-                              }),
+                              })  :
+                              b.Items.Select(x => new BillServiceDto
+                              {
+                                  Id = x.ProductId ?? 0,
+                                  Type = x.Product.Name,
+                                  Rate = x.Rate,
+                                  Name = x.Product.Name,
+                                  Description = x.Product.Description,
+                                  Price = x.Price,
+                                  TaxId = x.TaxId,
+                                  TaxPercentage = x.TaxPercentage,
+                                  Quantity = x.Quantity,
+                                  TaxPrice = x.TaxPrice,
+                                  LineAmount = x.LineAmount,
+                                  BankAccountId = x.Product.BankAccountId,
+                                  TaxBankAccountId = x.Taxes.BankAccountId
+
+
+                              })
+                              ,
                               Attachments = b.Attachments.Select(x => new BillAttachmentDto
                               {
                                   Id = x.Id,
@@ -242,6 +265,8 @@ namespace AccountErp.DataLayer.Repositories
                           })
                          .AsNoTracking()
                          .SingleOrDefaultAsync();
+
+            return bill;
         }
 
         public async Task<BillDetailForEditDto> GetDetailForEditAsync(int id)
@@ -270,23 +295,42 @@ namespace AccountErp.DataLayer.Repositories
                               PoSoNumber = e.PoSoNumber,
                               SubTotal = e.SubTotal,
                               RefrenceNumber = e.RefrenceNumber,
-                              Items = e.Items.Select(x => new BillServiceDto
+                              BillType = e.BillType,
+                              Items = e.BillType == 0 ? e.Items.Select(x => new BillServiceDto
                               {
-                                  Id = x.ItemId,
+                                  Id = x.ItemId ?? 0,
                                   Type = x.Item.Name,
                                   Rate = x.Rate,
                                   Name = x.Item.Name,
                                   Description = x.Item.Description,
-                                  Quantity = x.Quantity,
                                   Price = x.Price,
                                   TaxId = x.TaxId,
                                   TaxPercentage = x.TaxPercentage,
+                                  Quantity = x.Quantity,
                                   TaxPrice = x.TaxPrice,
                                   LineAmount = x.LineAmount,
                                   BankAccountId = x.Item.BankAccountId,
                                   TaxBankAccountId = x.Taxes.BankAccountId
 
-                              }),
+
+                              }) :
+                              e.Items.Select(x => new BillServiceDto
+                              {
+                                  Id = x.ProductId ?? 0,
+                                  Type = x.Product.Name,
+                                  Rate = x.Rate,
+                                  Name = x.Product.Name,
+                                  Description = x.Product.Description,
+                                  Price = x.Price,
+                                  TaxId = x.TaxId,
+                                  TaxPercentage = x.TaxPercentage,
+                                  Quantity = x.Quantity,
+                                  TaxPrice = x.TaxPrice,
+                                  LineAmount = x.LineAmount,
+                                  BankAccountId = x.Product.BankAccountId,
+                                  TaxBankAccountId = x.Taxes.BankAccountId
+                              })
+                              ,
                               Attachments = e.Attachments.Select(x => new BillAttachmentDto
                               {
                                   Id = x.Id,
@@ -322,7 +366,8 @@ namespace AccountErp.DataLayer.Repositories
                               Notes = e.Notes,
                               BillNumber = e.BillNumber,
                               SubTotal = e.SubTotal,
-                              RefrenceNumber = e.RefrenceNumber
+                              RefrenceNumber = e.RefrenceNumber,
+                              BillType = e.BillType
 
                           })
                 .AsNoTracking()
@@ -383,7 +428,8 @@ namespace AccountErp.DataLayer.Repositories
                                 BillNumber = e.BillNumber,
                                 PoSoNumber = e.PoSoNumber,
                                 SubTotal = e.SubTotal,
-                                RefrenceNumber = e.RefrenceNumber
+                                RefrenceNumber = e.RefrenceNumber,
+                                BillType = e.BillType
                                    })
                             .AsNoTracking()
                             .ToListAsync();

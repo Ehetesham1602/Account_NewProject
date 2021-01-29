@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AccountErp.Utilities;
+using System;
 using System.Collections.Generic;
 
 namespace AccountErp.Dtos.Bill
@@ -22,6 +23,7 @@ namespace AccountErp.Dtos.Bill
         public string Notes { get; set; }
         public string BillNumber { get; set; }
         public decimal? SubTotal { get; set; }
+        public Constants.InvoiceType BillType { get; set; }
         public IEnumerable<BillServiceDto> Items { get; set; }
         public IEnumerable<BillAttachmentDto> Attachments { get; set; }
     }

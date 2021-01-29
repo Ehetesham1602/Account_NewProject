@@ -1,4 +1,5 @@
 ﻿using AccountErp.Dtos.Customer;
+using AccountErp.Utilities;
 using System;
 using System.Collections.Generic;
 
@@ -19,7 +20,7 @@ namespace AccountErp.Dtos.Invoice
         public string StrInvoiceDate { get; set; }
         public string StrDueDate { get; set; }
         public decimal? SubTotal { get; set; }
-
+        public Constants.InvoiceType InvoiceType { get; set; }
         public CustomerDetailDto Customer { get; set; }
 
         public IEnumerable<InvoiceServiceDto> Items { get; set; }
