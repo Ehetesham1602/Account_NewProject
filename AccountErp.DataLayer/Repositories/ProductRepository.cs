@@ -61,7 +61,9 @@ namespace AccountErp.DataLayer.Repositories
                               Status = s.Status,
                               BankAccountId = s.BankAccountId,
                               ProductCategoryId = s.ProductCategoryId,
-                              CayegoryName = s.Category.Name
+                              CayegoryName = s.Category.Name,
+                              WarehouseId = s.WareHouseId,
+                              WarehouseName = s.Warehouse.Name
                           })
                           .AsNoTracking()
                           .SingleOrDefaultAsync();
@@ -94,7 +96,9 @@ namespace AccountErp.DataLayer.Repositories
                               BankAccountId = s.BankAccountId,
                               TaxBankAccountId = c.BankAccountId,
                               ProductCategoryId = s.ProductCategoryId,
-                              CayegoryName = s.Category.Name
+                              CayegoryName = s.Category.Name,
+                              WarehouseId = s.WareHouseId,
+                              WarehouseName = s.Warehouse.Name
                           })
                           .AsNoTracking()
                             .ToListAsync();
@@ -116,7 +120,9 @@ namespace AccountErp.DataLayer.Repositories
                               InitialStock = s.InitialStock,
                               BankAccountId = s.BankAccountId,
                               ProductCategoryId = s.ProductCategoryId,
-                              CayegoryName = s.Category.Name
+                              CayegoryName = s.Category.Name,
+                              WarehouseId = s.WareHouseId,
+                              WarehouseName = s.Warehouse.Name
                           })
                          .AsNoTracking()
                          .SingleOrDefaultAsync();
@@ -150,8 +156,9 @@ namespace AccountErp.DataLayer.Repositories
                                 BankAccountId = s.BankAccountId,
                                 ProductCategoryId = s.ProductCategoryId,
                                 CayegoryName = s.Category.Name,
-                                CreatedOn = s.CreatedOn
-
+                                CreatedOn = s.CreatedOn,
+                                WarehouseId = s.WareHouseId,
+                                WarehouseName = s.Warehouse.Name
 
                             })
                             .AsNoTracking();
@@ -196,7 +203,9 @@ namespace AccountErp.DataLayer.Repositories
                                 BankAccountId = s.BankAccountId,
                                 ProductCategoryId = s.ProductCategoryId,
                                 CayegoryName = s.Category.Name,
-                                CreatedOn = s.CreatedOn
+                                CreatedOn = s.CreatedOn,
+                                WarehouseId = s.WareHouseId,
+                                WarehouseName = s.Warehouse.Name
 
 
                             })
@@ -287,6 +296,14 @@ namespace AccountErp.DataLayer.Repositories
         {
             var item = await _dataContext.Product.FindAsync(id);
             item.Status = Constants.RecordStatus.Deleted;
+            _dataContext.Product.Update(item);
+
+        }
+
+        public async Task TransferWareHouse(int id ,int warehouseId)
+        {
+            var item = await _dataContext.Product.FindAsync(id);
+            item.WareHouseId = warehouseId;
             _dataContext.Product.Update(item);
 
         }

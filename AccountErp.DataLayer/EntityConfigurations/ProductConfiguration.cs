@@ -33,6 +33,7 @@ namespace AccountErp.DataLayer.EntityConfigurations
             builder.Property(x => x.ProductCategoryId).IsRequired(false);
 
             builder.HasOne(x => x.Category).WithMany().HasForeignKey(x => x.ProductCategoryId);
+            builder.HasOne(x => x.Warehouse).WithMany().HasForeignKey(x => x.WareHouseId);
 
         }
     }

@@ -19,6 +19,8 @@ namespace AccountErp.Dtos.Product
         public decimal BuyingPrice { get; set; }
         public string CayegoryName { get; set; }
         public int? ProductCategoryId { get; set; }
+        public int? WarehouseId { get; set; }
+        public string WarehouseName { get; set; }
         public Constants.RecordStatus Status { get; set; }
     }
 }

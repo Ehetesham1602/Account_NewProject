@@ -92,6 +92,11 @@ namespace AccountErp.Managers
             await _unitOfWork.SaveChangesAsync();
         }
 
+        public async Task TransferWareHouse(int id, int wareHouseId)
+        {
+            await _repository.TransferWareHouse(id,wareHouseId);
+            await _unitOfWork.SaveChangesAsync();
+        }
         //public async Task<IEnumerable<ProductDetailDto>> GetAllForSalesAsync(Constants.RecordStatus? status = null)
         //{
         //    return await _repository.GetAllForSalesAsync(status);

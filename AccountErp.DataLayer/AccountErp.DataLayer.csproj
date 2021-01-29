@@ -13,12 +13,40 @@
     <Compile Remove="Migrations\20201117092830_serverdbupdate17Nov2020.Designer.cs" />
     <Compile Remove="Migrations\20201117093312_serverdbupdate17Nov2020.cs" />
     <Compile Remove="Migrations\20201117093312_serverdbupdate17Nov2020.Designer.cs" />
+    <Compile Remove="Migrations\20201217073136_dbupdate12172020.cs" />
+    <Compile Remove="Migrations\20201217073136_dbupdate12172020.Designer.cs" />
     <Compile Remove="Migrations\20201217095610_recocilationupdate12-17-2020.cs" />
     <Compile Remove="Migrations\20201217095610_recocilationupdate12-17-2020.Designer.cs" />
+    <Compile Remove="Migrations\20201217100619_recocilationupdate12-17-2020.cs" />
+    <Compile Remove="Migrations\20201217100619_recocilationupdate12-17-2020.Designer.cs" />
+    <Compile Remove="Migrations\20201221052421_db12212020.cs" />
+    <Compile Remove="Migrations\20201221052421_db12212020.Designer.cs" />
+    <Compile Remove="Migrations\20201221113849_db211220.cs" />
+    <Compile Remove="Migrations\20201221113849_db211220.Designer.cs" />
+    <Compile Remove="Migrations\20201221114232_db211220121212.cs" />
+    <Compile Remove="Migrations\20201221114232_db211220121212.Designer.cs" />
+    <Compile Remove="Migrations\20201222093514_db22122020.cs" />
+    <Compile Remove="Migrations\20201222093514_db22122020.Designer.cs" />
+    <Compile Remove="Migrations\20210111121038_DbMigration11012021.cs" />
+    <Compile Remove="Migrations\20210111121038_DbMigration11012021.Designer.cs" />
+    <Compile Remove="Migrations\20210122123310_newDatabase.cs" />
+    <Compile Remove="Migrations\20210122123310_newDatabase.Designer.cs" />
+    <Compile Remove="Migrations\20210125050204_AddProduct.cs" />
+    <Compile Remove="Migrations\20210125050204_AddProduct.Designer.cs" />
+    <Compile Remove="Migrations\20210125092453_migration25012020.cs" />
+    <Compile Remove="Migrations\20210125092453_migration25012020.Designer.cs" />
     <Compile Remove="Migrations\20210125105901_categoryAdd.cs" />
     <Compile Remove="Migrations\20210125105901_categoryAdd.Designer.cs" />
     <Compile Remove="Migrations\20210125111033_categoryAdd.cs" />
     <Compile Remove="Migrations\20210125111033_categoryAdd.Designer.cs" />
+    <Compile Remove="Migrations\20210125111910_categoryAdd.cs" />
+    <Compile Remove="Migrations\20210125111910_categoryAdd.Designer.cs" />
+    <Compile Remove="Migrations\20210125120234_migrationeviningg.cs" />
+    <Compile Remove="Migrations\20210125120234_migrationeviningg.Designer.cs" />
+    <Compile Remove="Migrations\20210127063538_invoiceChange27012021.cs" />
+    <Compile Remove="Migrations\20210127063538_invoiceChange27012021.Designer.cs" />
+    <Compile Remove="Migrations\20210127123024_billChange27012021.cs" />
+    <Compile Remove="Migrations\20210127123024_billChange27012021.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
