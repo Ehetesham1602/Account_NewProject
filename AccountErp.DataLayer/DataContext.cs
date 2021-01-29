@@ -43,6 +43,8 @@ namespace AccountErp.DataLayer
         public DbSet<EndingStatementBalance> EndingStatementBalance { get; set; }
         public DbSet<Product> Product { get; set; }
         public DbSet<ProductCategory> ProductCategory { get; set; }
+        public DbSet<WareHouse> WareHouse { get; set; }
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -78,6 +80,8 @@ namespace AccountErp.DataLayer
             modelBuilder.ApplyConfiguration(new EndingStatementBalanceConfiguration());
             modelBuilder.ApplyConfiguration(new ProductConfiguration());
             modelBuilder.ApplyConfiguration(new ProductCategoryConfiguration());
+            modelBuilder.ApplyConfiguration(new WareHouseConfiguration());
+
 
 
         }

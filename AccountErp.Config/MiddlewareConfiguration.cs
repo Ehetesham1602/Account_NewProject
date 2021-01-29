@@ -53,6 +53,8 @@ namespace AccountErp.Config
             services.AddScoped<IEndingStatementBalanceManager, EndingStatementBalanceManager>();
             services.AddScoped<IProductManager, ProductManager>();
             services.AddScoped<IProductCategoryManager, ProductCategoryManager>();
+            services.AddScoped<IWareHouseManager, WareHouseManager>();
+
 
 
 
@@ -84,6 +86,8 @@ namespace AccountErp.Config
             services.AddScoped<IEndingStatementBalanceRepository, EndingStatementBalanceRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IProductCategoryRepository, ProductCategoryRepository>();
+            services.AddScoped<IWareHouseRepository, WareHouseRepository>();
+
 
 
         }
