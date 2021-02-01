@@ -263,7 +263,7 @@ namespace AccountErp.Factories
             else
             {
                  addedServices = model.Items
-                 .Where(x => !entity.Services.Select(y => y.ProductId).Contains(x.ServiceId))
+                 .Where(x => !entity.Services.Select(y => y.ProductId).Contains(x.ProductId))
                  .ToList();
             }
 
