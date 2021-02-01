@@ -217,7 +217,7 @@ namespace AccountErp.Factories
                 else
                 {
                     tempArr.Add(item.ProductId);
-                    alreadyExistServices = entity.Services.Where(x => item.ServiceId == x.ProductId).FirstOrDefault();
+                    alreadyExistServices = entity.Services.Where(x => item.ProductId == x.ProductId).FirstOrDefault();
                 }
 
                 if (alreadyExistServices != null)
