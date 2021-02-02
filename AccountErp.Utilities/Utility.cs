@@ -94,5 +94,48 @@ namespace AccountErp.Utilities
             var imageExtensions = new List<string> { ".JPG", ".JPEG", ".PNG" };
             return imageExtensions.Contains(extension.ToUpper());
         }
+
+        public static string Encrypt(string plainText)
+        {
+            if (plainText == null) throw new ArgumentNullException("plainText");
+
+            //encrypt data
+            //var data = Encoding.Unicode.GetBytes(plainText);
+            //byte[] encrypted = ProtectedData.Protect(data, null, DataProtectionScope.CurrentUser);
+            const int WorkFactor = 10;
+            var HashedPassword = BCrypt.Net.BCrypt.HashPassword(plainText, WorkFactor);
+            //return as base64 string
+            return HashedPassword;
+        }
+
+        public static bool Decrypt(string password, string cipher)
+        {
+            try
+            {
+                if (cipher == null) throw new ArgumentNullException("cipher");
+
+                const int WorkFactor = 10;
+                var HashedPassword = BCrypt.Net.BCrypt.HashPassword(password, WorkFactor);
+                if (BCrypt.Net.BCrypt.Verify(password, cipher) == true)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            //parse base64 string
+            //byte[] data = Convert.FromBase64String(cipher);
+
+            //decrypt data
+            // byte[] decrypted = ProtectedData.Unprotect(data, null, DataProtectionScope.CurrentUser);
+            //return Encoding.Unicode.GetString(decrypted);
+
+        }
     }
 }

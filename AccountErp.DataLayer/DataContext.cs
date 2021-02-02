@@ -45,6 +45,12 @@ namespace AccountErp.DataLayer
         public DbSet<ProductCategory> ProductCategory { get; set; }
         public DbSet<WareHouse> WareHouse { get; set; }
 
+        public DbSet<User> User { get; set; }
+        public DbSet<UserRole> UsersRoles { get; set; }
+        public DbSet<LoginModule> LoginModule { get; set; }
+        public DbSet<UserScreenAccess> UserScreenAccess { get; set; }
+        public DbSet<ScreenDetail> ScreenDetail { get; set; }
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -81,6 +87,11 @@ namespace AccountErp.DataLayer
             modelBuilder.ApplyConfiguration(new ProductConfiguration());
             modelBuilder.ApplyConfiguration(new ProductCategoryConfiguration());
             modelBuilder.ApplyConfiguration(new WareHouseConfiguration());
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
+            modelBuilder.ApplyConfiguration(new UserRoleConfiguration());
+            modelBuilder.ApplyConfiguration(new LoginModuleConfiguration());
+            modelBuilder.ApplyConfiguration(new UserScreenAccessConfiguration());
+            modelBuilder.ApplyConfiguration(new ScreenDetailConfiguration());
 
 
 

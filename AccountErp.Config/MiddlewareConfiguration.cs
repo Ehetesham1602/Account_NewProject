@@ -54,7 +54,9 @@ namespace AccountErp.Config
             services.AddScoped<IProductManager, ProductManager>();
             services.AddScoped<IProductCategoryManager, ProductCategoryManager>();
             services.AddScoped<IWareHouseManager, WareHouseManager>();
-
+            services.AddScoped<IUserAccessMAnager, UserAccessManager>();
+            services.AddScoped<IUserManager, UserManager>();
+            services.AddScoped<IUserRoleManager, UserRoleManager>();
 
 
 
@@ -88,6 +90,9 @@ namespace AccountErp.Config
             services.AddScoped<IProductCategoryRepository, ProductCategoryRepository>();
             services.AddScoped<IWareHouseRepository, WareHouseRepository>();
 
+            services.AddScoped<IUserAccessRepository, UserAccessRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserRoleRepository, UserRoleRepository>();
 
 
         }

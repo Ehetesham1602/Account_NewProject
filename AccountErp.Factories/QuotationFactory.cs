@@ -33,10 +33,12 @@ namespace AccountErp.Factories
                 Memo = model.Memo,
                 SubTotal = model.SubTotal,
                 LineAmountSubTotal = model.LineAmountSubTotal,
+                QuotationType = model.QuotationType,
                 Services = model.Items.Select(x => new QuotationService
                 {
                     Id = Guid.NewGuid(),
                     ServiceId = x.ServiceId,
+                    ProductId = x.ProductId,
                     Rate = x.Rate,
                     Quantity = x.Quantity,
                     Price = x.Price,
@@ -82,7 +84,7 @@ namespace AccountErp.Factories
             entity.Memo = model.Memo;
             entity.SubTotal = model.SubTotal;
             entity.LineAmountSubTotal = model.LineAmountSubTotal;
-
+            entity.QuotationType = model.QuotationType;
             //int[] arr = new int[100];
             ArrayList tempArr = new ArrayList();
 
@@ -93,9 +95,19 @@ namespace AccountErp.Factories
 
             foreach (var item in model.Items)
             {
-                tempArr.Add(item.ServiceId);
-                var alreadyExistServices = entity.Services.Where(x => item.ServiceId == x.ServiceId).FirstOrDefault();
-                //entity.Services.Where(x => item.ServiceId == x.ServiceId).Select(c => { c.CreditLimit = 1000; return c; });
+                var alreadyExistServices = new QuotationService();
+                if (model.QuotationType == 0)
+                {
+                    tempArr.Add(item.ServiceId);
+                    alreadyExistServices = entity.Services.Where(x => item.ServiceId == x.ServiceId).FirstOrDefault();
+                    //entity.Services.Where(x => item.ServiceId == x.ServiceId).Select(c => { c.CreditLimit = 1000; return c; });
+                }
+                else
+                {
+                    tempArr.Add(item.ProductId);
+                    alreadyExistServices = entity.Services.Where(x => item.ProductId == x.ProductId).FirstOrDefault();
+                }
+
                 if (alreadyExistServices != null)
                 {
                     alreadyExistServices.Price = item.Price;
@@ -109,17 +121,43 @@ namespace AccountErp.Factories
                 }
             }
 
-            var deletedServices = entity.Services.Where(x => !tempArr.Contains(x.ServiceId)).ToList();
+            var deletedServices = new List<QuotationService>();
+            if (model.QuotationType == 0)
+            {
+                deletedServices = entity.Services.Where(x => !tempArr.Contains(x.ServiceId)).ToList();
+            }
+            else
+            {
+                deletedServices = entity.Services.Where(x => !tempArr.Contains(x.ProductId)).ToList();
+            }
+
+
+            //var alreadyExistServices = entity.Services.Where(x => tempArr.Contains(x.ServiceId)).ToList();
             //var resultAll = items.Where(i => filter.All(x => i.Features.Any(f => x == f.Id)));
+
 
             foreach (var deletedService in deletedServices)
             {
                 entity.Services.Remove(deletedService);
             }
 
-            var addedServices = model.Items
-                .Where(x => !entity.Services.Select(y => y.ServiceId).Contains(x.ServiceId))
+            var addedServices = new List<QuotationServiceModel>();
+            if (model.QuotationType == 0)
+            {
+                addedServices = model.Items
+               .Where(x => !entity.Services.Select(y => y.ServiceId).Contains(x.ServiceId))
+               .ToList();
+            }
+            else
+            {
+                addedServices = model.Items
+                .Where(x => !entity.Services.Select(y => y.ProductId).Contains(x.ProductId))
                 .ToList();
+            }
+
+            //var addedServices = model.Items
+            //    .Where(x => !entity.Services.Select(y => y.ServiceId).Contains(x.ServiceId))
+            //    .ToList();
 
             foreach (var service in addedServices)
             {
@@ -127,6 +165,7 @@ namespace AccountErp.Factories
                 {
                     Id = Guid.NewGuid(),
                     ServiceId = service.ServiceId,
+                    ProductId = service.ProductId,
                     Rate = service.Rate,
                     TaxId = service.TaxId,
                     Price = service.Price,

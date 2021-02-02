@@ -103,7 +103,7 @@ namespace AccountErp.Factories
                 else
                 {
                     tempArr.Add(item.ProductId);
-                    alreadyExistServices = bill.Items.Where(x => item.ItemId == x.ProductId).FirstOrDefault();
+                    alreadyExistServices = bill.Items.Where(x => item.ProductId == x.ProductId).FirstOrDefault();
                 }
 
                 //tempArr.Add(item.ItemId);
@@ -152,7 +152,7 @@ namespace AccountErp.Factories
             else
             {
                 addedServices = model.Items
-                .Where(x => !bill.Items.Select(y => y.ProductId).Contains(x.ItemId))
+                .Where(x => !bill.Items.Select(y => y.ProductId).Contains(x.ProductId))
                 .ToList();
             }
 

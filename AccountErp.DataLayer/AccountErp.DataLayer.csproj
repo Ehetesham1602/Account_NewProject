@@ -47,6 +47,8 @@
     <Compile Remove="Migrations\20210127063538_invoiceChange27012021.Designer.cs" />
     <Compile Remove="Migrations\20210127123024_billChange27012021.cs" />
     <Compile Remove="Migrations\20210127123024_billChange27012021.Designer.cs" />
+    <Compile Remove="Migrations\20210201124248_usermanagement01022021.cs" />
+    <Compile Remove="Migrations\20210201124248_usermanagement01022021.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

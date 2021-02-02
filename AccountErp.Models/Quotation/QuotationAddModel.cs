@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AccountErp.Utilities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
@@ -26,6 +27,7 @@ namespace AccountErp.Models.Quotation
         public string Memo { get; set; }
         public decimal? SubTotal { get; set; }
         public decimal? LineAmountSubTotal { get; set; }
+        public Constants.InvoiceType QuotationType { get; set; }
         [Required]
         public List<QuotationServiceModel> Items { get; set; }
 

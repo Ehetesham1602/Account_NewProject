@@ -67,6 +67,7 @@ namespace AccountErp.DataLayer.Repositories
                                      Memo = i.Memo,
                                      QuotationNumber = i.QuotationNumber,
                                      SubTotal = i.SubTotal,
+                                     QuotationType = i.QuotationType,
                                      Customer = new CustomerDetailDto
                                      {
                                          FirstName = c.FirstName,
@@ -84,9 +85,9 @@ namespace AccountErp.DataLayer.Repositories
                                              PostalCode = c.Address.PostalCode
                                          }
                                      },
-                                     Items = i.Services.Select(x => new QuotationServiceDto
+                                     Items = i.QuotationType == 0 ? i.Services.Select(x => new QuotationServiceDto
                                      {
-                                         Id = x.ServiceId,
+                                         Id = x.ServiceId ?? 0,
                                          Type = x.Service.Name,
                                          Rate = x.Rate,
                                          Name = x.Service.Name,
@@ -99,7 +100,26 @@ namespace AccountErp.DataLayer.Repositories
                                          LineAmount = x.LineAmount,
                                          BankAccountId = x.Service.BankAccountId,
                                          TaxBankAccountId = x.Taxes.BankAccountId
-                                     }),
+                                     }) :
+
+
+                                      i.Services.Select(x => new QuotationServiceDto
+                                      {
+                                          Id = x.ProductId ?? 0,
+                                          Type = x.Product.Name,
+                                          Rate = x.Rate,
+                                          Name = x.Product.Name,
+                                          Description = x.Product.Description,
+                                          Quantity = x.Quantity,
+                                          Price = x.Price,
+                                          TaxId = x.TaxId,
+                                          TaxPrice = x.TaxPrice,
+                                          TaxPercentage = x.TaxPercentage,
+                                          LineAmount = x.LineAmount,
+                                          BankAccountId = x.Product.BankAccountId,
+                                          TaxBankAccountId = x.Product.BankAccountId
+                                      })
+                                     ,
                                      Attachments = i.Attachments.Select(x => new QuotationAttachmentDto
                                      {
                                          Id = x.Id,
@@ -136,15 +156,16 @@ namespace AccountErp.DataLayer.Repositories
                               Memo = i.Memo,
                               QuotationNumber = i.QuotationNumber,
                               SubTotal = i.SubTotal,
+                              QuotationType = i.QuotationType,
                               Customer = new CustomerDetailDto
                               {
                                   FirstName = c.FirstName,
                                   LastName = c.LastName,
                                   Phone = c.Phone
                               },
-                              Items = i.Services.Select(x => new QuotationServiceDto
+                              Items = i.QuotationType == 0 ? i.Services.Select(x => new QuotationServiceDto
                               {
-                                  Id = x.ServiceId,
+                                  Id = x.ServiceId ?? 0,
                                   Type = x.Service.Name,
                                   Rate = x.Rate,
                                   Name = x.Service.Name,
@@ -157,7 +178,26 @@ namespace AccountErp.DataLayer.Repositories
                                   LineAmount = x.LineAmount,
                                   BankAccountId = x.Service.BankAccountId,
                                   TaxBankAccountId = x.Taxes.BankAccountId
-                              }),
+                              }) :
+
+
+                                      i.Services.Select(x => new QuotationServiceDto
+                                      {
+                                          Id = x.ProductId ?? 0,
+                                          Type = x.Product.Name,
+                                          Rate = x.Rate,
+                                          Name = x.Product.Name,
+                                          Description = x.Product.Description,
+                                          Quantity = x.Quantity,
+                                          Price = x.Price,
+                                          TaxId = x.TaxId,
+                                          TaxPrice = x.TaxPrice,
+                                          TaxPercentage = x.TaxPercentage,
+                                          LineAmount = x.LineAmount,
+                                          BankAccountId = x.Product.BankAccountId,
+                                          TaxBankAccountId = x.Product.BankAccountId
+                                      })
+                                     ,
                               Attachments = i.Attachments.Select(x => new QuotationAttachmentDto
                               {
                                   Id = x.Id,
@@ -205,7 +245,8 @@ namespace AccountErp.DataLayer.Repositories
                                 ExpiryDate = i.ExpireDate,
                                 StrExpiryDate = i.StrExpireDate,
                                 QuotationNumber = i.QuotationNumber,
-                                SubTotal = i.SubTotal
+                                SubTotal = i.SubTotal,
+                                QuotationType = i.QuotationType
 
                             })
                             .AsNoTracking();
@@ -283,7 +324,8 @@ namespace AccountErp.DataLayer.Repositories
                               PoSoNumber = i.PoSoNumber,
                               Memo = i.Memo,
                               QuotationNumber = i.QuotationNumber,
-                              SubTotal = i.SubTotal
+                              SubTotal = i.SubTotal,
+                              QuotationType = i.QuotationType
                           })
                           .AsNoTracking()
                           .SingleOrDefaultAsync();

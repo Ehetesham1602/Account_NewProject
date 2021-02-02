@@ -25,5 +25,6 @@ namespace AccountErp.Dtos.Quotation
         public DateTime CreatedOn { get; set; }
         public decimal? SubTotal { get; set; }
         public Constants.InvoiceStatus Status { get; set; }
+        public Constants.InvoiceType QuotationType { get; set; }
     }
 }

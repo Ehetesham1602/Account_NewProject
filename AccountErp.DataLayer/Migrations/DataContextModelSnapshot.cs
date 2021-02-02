@@ -837,6 +837,27 @@ namespace AccountErp.DataLayer.Migrations
                     b.ToTable("ItemTypes");
                 });
 
+            modelBuilder.Entity("AccountErp.Entities.LoginModule", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("RoleId");
+
+                    b.Property<int>("UserId");
+
+                    b.Property<DateTime?>("createdOn");
+
+                    b.Property<bool?>("status");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("LoginModule");
+                });
+
             modelBuilder.Entity("AccountErp.Entities.PaymentMethod", b =>
                 {
                     b.Property<int>("Id")
@@ -970,6 +991,8 @@ namespace AccountErp.DataLayer.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
+                    b.Property<int>("QuotationType");
+
                     b.Property<string>("Remark")
                         .HasMaxLength(1000);
 
@@ -1044,6 +1067,8 @@ namespace AccountErp.DataLayer.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("NUMERIC(12,2)");
 
+                    b.Property<int?>("ProductId");
+
                     b.Property<int>("Quantity");
 
                     b.Property<int>("QuotationId");
@@ -1051,7 +1076,7 @@ namespace AccountErp.DataLayer.Migrations
                     b.Property<decimal>("Rate")
                         .HasColumnType("NUMERIC(12,2)");
 
-                    b.Property<int>("ServiceId");
+                    b.Property<int?>("ServiceId");
 
                     b.Property<int?>("TaxId");
 
@@ -1061,6 +1086,8 @@ namespace AccountErp.DataLayer.Migrations
                         .HasColumnType("NUMERIC(12,2)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
 
                     b.HasIndex("QuotationId");
 
@@ -1260,6 +1287,23 @@ namespace AccountErp.DataLayer.Migrations
                     b.ToTable("SalesTaxes");
                 });
 
+            modelBuilder.Entity("AccountErp.Entities.ScreenDetail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ScreenCode")
+                        .IsRequired();
+
+                    b.Property<string>("ScreenName")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ScreenDetail");
+                });
+
             modelBuilder.Entity("AccountErp.Entities.ShippingAddress", b =>
                 {
                     b.Property<int>("Id")
@@ -1336,6 +1380,98 @@ namespace AccountErp.DataLayer.Migrations
                     b.HasIndex("BankAccountId");
 
                     b.ToTable("Transaction");
+                });
+
+            modelBuilder.Entity("AccountErp.Entities.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(40);
+
+                    b.Property<DateTime>("CreatedOn");
+
+                    b.Property<string>("Email")
+                        .IsRequired();
+
+                    b.Property<string>("FirstName")
+                        .IsRequired();
+
+                    b.Property<string>("LastName")
+                        .IsRequired();
+
+                    b.Property<string>("Mobile")
+                        .IsRequired();
+
+                    b.Property<string>("Password")
+                        .IsRequired();
+
+                    b.Property<int>("RoleId");
+
+                    b.Property<int>("Status");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasMaxLength(40);
+
+                    b.Property<DateTime?>("UpdatedOn");
+
+                    b.Property<string>("UserName")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("AccountErp.Entities.UserRole", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(40);
+
+                    b.Property<DateTime>("CreatedOn");
+
+                    b.Property<string>("RoleName")
+                        .IsRequired();
+
+                    b.Property<int>("Status");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasMaxLength(40);
+
+                    b.Property<DateTime?>("UpdatedOn");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserRoles");
+                });
+
+            modelBuilder.Entity("AccountErp.Entities.UserScreenAccess", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("CanAccess");
+
+                    b.Property<int>("ScreenId");
+
+                    b.Property<int>("UserRoleId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ScreenId");
+
+                    b.ToTable("UserScreenAccess");
                 });
 
             modelBuilder.Entity("AccountErp.Entities.Vendor", b =>
@@ -1710,6 +1846,14 @@ namespace AccountErp.DataLayer.Migrations
                         .HasForeignKey("SalesTaxId");
                 });
 
+            modelBuilder.Entity("AccountErp.Entities.LoginModule", b =>
+                {
+                    b.HasOne("AccountErp.Entities.User", "user")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("AccountErp.Entities.Product", b =>
                 {
                     b.HasOne("AccountErp.Entities.ProductCategory", "Category")
@@ -1743,6 +1887,10 @@ namespace AccountErp.DataLayer.Migrations
 
             modelBuilder.Entity("AccountErp.Entities.QuotationService", b =>
                 {
+                    b.HasOne("AccountErp.Entities.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId");
+
                     b.HasOne("AccountErp.Entities.Quotation")
                         .WithMany("Services")
                         .HasForeignKey("QuotationId")
@@ -1750,8 +1898,7 @@ namespace AccountErp.DataLayer.Migrations
 
                     b.HasOne("AccountErp.Entities.Item", "Service")
                         .WithMany()
-                        .HasForeignKey("ServiceId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ServiceId");
 
                     b.HasOne("AccountErp.Entities.SalesTax", "Taxes")
                         .WithMany()
@@ -1811,6 +1958,22 @@ namespace AccountErp.DataLayer.Migrations
                     b.HasOne("AccountErp.Entities.BankAccount")
                         .WithMany("Transaction")
                         .HasForeignKey("BankAccountId");
+                });
+
+            modelBuilder.Entity("AccountErp.Entities.User", b =>
+                {
+                    b.HasOne("AccountErp.Entities.UserRole", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("AccountErp.Entities.UserScreenAccess", b =>
+                {
+                    b.HasOne("AccountErp.Entities.ScreenDetail", "Screen")
+                        .WithMany()
+                        .HasForeignKey("ScreenId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("AccountErp.Entities.Vendor", b =>
