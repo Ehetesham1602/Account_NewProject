@@ -50,6 +50,10 @@ namespace AccountErp.DataLayer
         public DbSet<LoginModule> LoginModule { get; set; }
         public DbSet<UserScreenAccess> UserScreenAccess { get; set; }
         public DbSet<ScreenDetail> ScreenDetail { get; set; }
+        public DbSet<CreditCard> CreditCard { get; set; }
+        public DbSet<CreditMemoService> CreditMemoService { get; set; }
+
+
 
 
 
@@ -92,6 +96,9 @@ namespace AccountErp.DataLayer
             modelBuilder.ApplyConfiguration(new LoginModuleConfiguration());
             modelBuilder.ApplyConfiguration(new UserScreenAccessConfiguration());
             modelBuilder.ApplyConfiguration(new ScreenDetailConfiguration());
+            modelBuilder.ApplyConfiguration(new CreditMemoConfiguration());
+            modelBuilder.ApplyConfiguration(new CreditMemoServiceConfiguration());
+
 
 
 
