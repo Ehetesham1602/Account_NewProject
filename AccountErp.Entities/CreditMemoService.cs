@@ -19,7 +19,7 @@ namespace AccountErp.Entities
         public decimal LineAmount { get; set; }
         public int OldQuantity { get; set; }
         public int NewQuantity { get; set; }
-        public Item Item1 { get; set; }
+      //  public Item Item1 { get; set; }
         public Product Product { get; set; }
         public SalesTax Taxes { get; set; }
         public Item Item { get; set; }
