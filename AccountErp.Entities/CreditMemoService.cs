@@ -8,7 +8,7 @@ namespace AccountErp.Entities
     {
 
         public Guid Id { get; set; }
-        public int InvoiceId { get; set; }
+        public int CreditMemoId { get; set; }
         public int? ServiceId { get; set; }
         public int? ProductId { get; set; }
         public decimal Rate { get; set; }
@@ -23,6 +23,8 @@ namespace AccountErp.Entities
         public Product Product { get; set; }
         public SalesTax Taxes { get; set; }
         public Item Item { get; set; }
+        public CreditMemo CreditMemo { get; set; }
+
 
     }
 }
