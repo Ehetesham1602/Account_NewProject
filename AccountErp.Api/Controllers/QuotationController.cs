@@ -17,7 +17,7 @@ using Microsoft.EntityFrameworkCore.Internal;
 namespace AccountErp.Api.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize]
+   // [Authorize]
     [ApiController]
     public class QuotationController : ControllerBase
     {

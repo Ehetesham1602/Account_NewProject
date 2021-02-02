@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AccountErp.Dtos\AccountErp.Dtos.csproj" />
     <ProjectReference Include="..\AccountErp.Entities\AccountErp.Entities.csproj" />
     <ProjectReference Include="..\AccountErp.Models\AccountErp.Models.csproj" />
   </ItemGroup>

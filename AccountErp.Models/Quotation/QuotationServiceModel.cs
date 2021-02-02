@@ -6,7 +6,8 @@ namespace AccountErp.Models.Quotation
 {
    public class QuotationServiceModel
     {
-        public int ServiceId { get; set; }
+        public int? ServiceId { get; set; }
+        public int? ProductId { get; set; }
         public decimal Rate { get; set; }
         public decimal Price { get; set; }
         public int? TaxId { get; set; }

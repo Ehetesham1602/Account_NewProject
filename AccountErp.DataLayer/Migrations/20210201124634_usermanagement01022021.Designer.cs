@@ -4,14 +4,16 @@ using AccountErp.DataLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AccountErp.DataLayer.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20210201124634_usermanagement01022021")]
+    partial class usermanagement01022021
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -991,8 +993,6 @@ namespace AccountErp.DataLayer.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
-                    b.Property<int>("QuotationType");
-
                     b.Property<string>("Remark")
                         .HasMaxLength(1000);
 
@@ -1067,8 +1067,6 @@ namespace AccountErp.DataLayer.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("NUMERIC(12,2)");
 
-                    b.Property<int?>("ProductId");
-
                     b.Property<int>("Quantity");
 
                     b.Property<int>("QuotationId");
@@ -1076,7 +1074,7 @@ namespace AccountErp.DataLayer.Migrations
                     b.Property<decimal>("Rate")
                         .HasColumnType("NUMERIC(12,2)");
 
-                    b.Property<int?>("ServiceId");
+                    b.Property<int>("ServiceId");
 
                     b.Property<int?>("TaxId");
 
@@ -1086,8 +1084,6 @@ namespace AccountErp.DataLayer.Migrations
                         .HasColumnType("NUMERIC(12,2)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
 
                     b.HasIndex("QuotationId");
 
@@ -1887,10 +1883,6 @@ namespace AccountErp.DataLayer.Migrations
 
             modelBuilder.Entity("AccountErp.Entities.QuotationService", b =>
                 {
-                    b.HasOne("AccountErp.Entities.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId");
-
                     b.HasOne("AccountErp.Entities.Quotation")
                         .WithMany("Services")
                         .HasForeignKey("QuotationId")
@@ -1898,7 +1890,8 @@ namespace AccountErp.DataLayer.Migrations
 
                     b.HasOne("AccountErp.Entities.Item", "Service")
                         .WithMany()
-                        .HasForeignKey("ServiceId");
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("AccountErp.Entities.SalesTax", "Taxes")
                         .WithMany()
