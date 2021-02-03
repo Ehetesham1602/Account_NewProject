@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
@@ -49,6 +49,14 @@
     <Compile Remove="Migrations\20210127123024_billChange27012021.Designer.cs" />
     <Compile Remove="Migrations\20210201124248_usermanagement01022021.cs" />
     <Compile Remove="Migrations\20210201124248_usermanagement01022021.Designer.cs" />
+    <Compile Remove="Migrations\20210202123343_Dbmigration2022021.cs" />
+    <Compile Remove="Migrations\20210202123343_Dbmigration2022021.Designer.cs" />
+    <Compile Remove="Migrations\20210203051904_creditMemo03022021.cs" />
+    <Compile Remove="Migrations\20210203051904_creditMemo03022021.Designer.cs" />
+    <Compile Remove="Migrations\20210203052240_creditMemo03022021.cs" />
+    <Compile Remove="Migrations\20210203052240_creditMemo03022021.Designer.cs" />
+    <Compile Remove="Migrations\20210203053706_creditMemo03022021.cs" />
+    <Compile Remove="Migrations\20210203053706_creditMemo03022021.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

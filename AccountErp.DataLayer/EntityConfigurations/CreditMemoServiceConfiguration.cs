@@ -29,7 +29,6 @@ namespace AccountErp.DataLayer.EntityConfigurations
             builder.HasOne(x => x.Item).WithMany().HasForeignKey(x => x.ServiceId);
             builder.HasOne(x => x.Product).WithMany().HasForeignKey(x => x.ProductId);
             builder.HasOne(x => x.Taxes).WithMany().HasForeignKey(x => x.TaxId);
-            builder.HasOne(x => x.CreditMemo).WithMany().HasForeignKey(x => x.CreditMemoId);
 
         }
     }

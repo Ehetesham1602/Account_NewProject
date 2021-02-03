@@ -28,8 +28,9 @@ namespace AccountErp.Entities
         public decimal? PoSoNumber { get; set; }
         public decimal? SubTotal { get; set; }
         public decimal? LineAmountSubTotal { get; set; }
-        public int InvoiceId { get; set; }
+        public int? InvoiceId { get; set; }
         public Invoice Invoice { get; set; }
+        public ICollection<CreditMemoService> CreditMemoService { get; set; }
 
 
     }

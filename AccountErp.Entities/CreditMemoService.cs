@@ -23,7 +23,6 @@ namespace AccountErp.Entities
         public Product Product { get; set; }
         public SalesTax Taxes { get; set; }
         public Item Item { get; set; }
-        public CreditMemo CreditMemo { get; set; }
 
 
     }
