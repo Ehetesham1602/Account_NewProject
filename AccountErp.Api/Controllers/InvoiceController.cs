@@ -230,5 +230,13 @@ namespace AccountErp.Api.Controllers
 
             return Ok(pagedResult);
         }
+
+
+        [HttpGet]
+        [Route("getProductInvoice")]
+        public async Task<IActionResult> GetSelectInoviceAsync()
+        {
+            return Ok(await _invoiceManager.GetSelectInoviceAsync());
+        }
     }
 }

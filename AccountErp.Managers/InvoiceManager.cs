@@ -1,4 +1,5 @@
-﻿using AccountErp.Dtos.Invoice;
+﻿using AccountErp.Dtos;
+using AccountErp.Dtos.Invoice;
 using AccountErp.Factories;
 using AccountErp.Infrastructure.DataLayer;
 using AccountErp.Infrastructure.Managers;
@@ -230,6 +231,11 @@ namespace AccountErp.Managers
             invoiceCountDto.InvoiceListTopTensList = invoiceListTopTens.Take(5).ToList();
             invoiceCountDto.Count = invoiceListTopTens.Count;
             return invoiceCountDto;
+        }
+
+        public async Task<IEnumerable<SelectListItemDto>> GetSelectInoviceAsync()
+        {
+            return await _invoiceRepository.GetSelectInoviceAsync();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using AccountErp.Dtos.Invoice;
+﻿using AccountErp.Dtos;
+using AccountErp.Dtos.Invoice;
 using AccountErp.Entities;
 using AccountErp.Models.Invoice;
 using AccountErp.Utilities;
@@ -36,5 +37,6 @@ namespace AccountErp.Infrastructure.Repositories
         Task<int> getCount();
         Task<List<InvoiceListItemDto>> GetAllUnpaidInvoiceAsync();
         Task<List<InvoiceListTopTenDto>> GetTopTenInvoicesAsync();
+        Task<IEnumerable<SelectListItemDto>> GetSelectInoviceAsync();
     }
 }

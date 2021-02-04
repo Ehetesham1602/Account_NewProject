@@ -43,7 +43,23 @@ namespace AccountErp.Managers
 
         public async Task<List<ScreenAccessDto>> GetUserScreenAccessById(int id)
         {
-            return await _repository.GetAsyncUserScreenAccess(id);
+            List<ScreenAccessDto> data = new List<ScreenAccessDto>();
+          data = await _repository.GetAsyncUserScreenAccess(id);
+            if(data.Count == 0)
+            {
+                var screenData = await _repository.GetAllScreenDetail();
+                foreach(var item in screenData)
+                {
+                    ScreenAccessDto obj = new ScreenAccessDto();
+                    obj.ScreenId = item.Id;
+                    obj.UserRoleId = id;
+                    obj.CanAccess = false;
+
+                    data.Add(obj);
+                }
+            }
+
+            return data;
         }
         public async Task<List<ScreendetailDto>> GetAllScreenDetail()
         {

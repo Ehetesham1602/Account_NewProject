@@ -1,4 +1,5 @@
-﻿using AccountErp.Dtos.Address;
+﻿using AccountErp.Dtos;
+using AccountErp.Dtos.Address;
 using AccountErp.Dtos.Customer;
 using AccountErp.Dtos.Invoice;
 using AccountErp.Entities;
@@ -438,6 +439,19 @@ namespace AccountErp.DataLayer.Repositories
                             //.AsNoTracking().Take(5).OrderBy("InvoiceDate ASC").ToListAsync();
 
             return linqstmt;
+        }
+
+        public async Task<IEnumerable<SelectListItemDto>> GetSelectInoviceAsync()
+        {
+            return await _dataContext.Invoices
+                .AsNoTracking()
+                .Where(x => x.Status != Constants.InvoiceStatus.Deleted && x.InvoiceType == Constants.InvoiceType.Product)
+                .OrderBy(x => x.InvoiceNumber)
+                .Select(x => new SelectListItemDto
+                {
+                    KeyInt = x.Id,
+                    Value = x.InvoiceNumber
+                }).ToListAsync();
         }
 
     }
