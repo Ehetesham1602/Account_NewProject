@@ -57,6 +57,7 @@ namespace AccountErp.Config
             services.AddScoped<IUserAccessMAnager, UserAccessManager>();
             services.AddScoped<IUserManager, UserManager>();
             services.AddScoped<IUserRoleManager, UserRoleManager>();
+            services.AddScoped<ICreditMemoManager, CreditMemoManager>();
 
 
 
@@ -93,6 +94,8 @@ namespace AccountErp.Config
             services.AddScoped<IUserAccessRepository, UserAccessRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserRoleRepository, UserRoleRepository>();
+            services.AddScoped<ICreditMemoRepository, CreditMemoRepository>();
+
 
 
         }

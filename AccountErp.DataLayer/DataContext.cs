@@ -51,6 +51,9 @@ namespace AccountErp.DataLayer
         public DbSet<UserScreenAccess> UserScreenAccess { get; set; }
         public DbSet<ScreenDetail> ScreenDetail { get; set; }
         public DbSet<CreditCard> CreditCard { get; set; }
+
+        public DbSet<CreditMemo> CreditMemo { get; set; }
+
         public DbSet<CreditMemoService> CreditMemoService { get; set; }
 
 
