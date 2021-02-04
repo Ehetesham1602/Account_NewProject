@@ -54,7 +54,7 @@ namespace AccountErp.Managers
                     obj.ScreenId = item.Id;
                     obj.UserRoleId = id;
                     obj.CanAccess = false;
-
+                    obj.ScreenName = item.ScreenName;
                     data.Add(obj);
                 }
             }
