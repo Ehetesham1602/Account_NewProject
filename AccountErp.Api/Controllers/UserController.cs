@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using AccountErp.Api.Helpers;
 using AccountErp.Infrastructure.Managers;
@@ -10,6 +13,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 
 namespace AccountErp.Api.Controllers
 {
@@ -18,12 +23,14 @@ namespace AccountErp.Api.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
+        private readonly IConfiguration _configuration;
         private readonly IUserManager _manager;
         private readonly IHostingEnvironment _environment;
 
-        public UserController(IUserManager manager,
+        public UserController(IConfiguration configuration, IUserManager manager,
             IHostingEnvironment environment)
         {
+            _configuration = configuration;
             _manager = manager;
             _environment = environment;
         }
@@ -113,15 +120,34 @@ namespace AccountErp.Api.Controllers
             var data = await _manager.CheckUser(model.UserName);
             if(data != null)
             {
-                if (Utility.Decrypt(model.Password,data.Password)==false)
+                if (AccountErp.Utilities.Utility.Decrypt(model.Password,data.Password)==false)
                 {
                     return BadRequest("Invalid Password");
                 }
                 else
                 {
                     await _manager.LoginAddAsync(data);
-                   // HttpContext.Session.SetString("UserId", data.Id.ToString());
-                    return Ok(data);
+
+                    var tokenHandler = new JwtSecurityTokenHandler();
+                    var key = Encoding.ASCII.GetBytes(_configuration.GetValue<string>("Jwt:secret"));
+                    var tokenDescription = new SecurityTokenDescriptor
+                    {
+                        Subject = new ClaimsIdentity(new[]
+                        { new Claim("id", data.Id.ToString()) ,
+                            new Claim("Name", data.UserName.ToString()),
+                             new Claim("RoleId", data.RoleId.ToString()),
+                             new Claim("RoleName", data.RoleName.ToString())
+                        }
+                        ),
+                        Audience = _configuration.GetValue<string>("Jwt:Audience"),
+                        Issuer = _configuration.GetValue<string>("Jwt:Issuer"),
+                        Expires = DateTime.UtcNow.AddDays(7),
+                        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                    };
+
+                    var token = tokenHandler.CreateToken(tokenDescription);
+
+                    return Ok(tokenHandler.WriteToken(token));
                 }
             }
             else
