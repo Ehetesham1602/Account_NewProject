@@ -127,10 +127,10 @@ namespace AccountErp.Api.Controllers
                 else
                 {
                     await _manager.LoginAddAsync(data);
-                    // HttpContext.Session.SetString("UserId", data.Id.ToString());
+
                     var tokenHandler = new JwtSecurityTokenHandler();
                     var key = Encoding.ASCII.GetBytes(_configuration.GetValue<string>("Jwt:secret"));
-                    var tokenDescriptor = new SecurityTokenDescriptor
+                    var tokenDescription = new SecurityTokenDescriptor
                     {
                         Subject = new ClaimsIdentity(new[]
                         { new Claim("id", data.Id.ToString()) ,
@@ -139,28 +139,15 @@ namespace AccountErp.Api.Controllers
                              new Claim("RoleName", data.RoleName.ToString())
                         }
                         ),
+                        Audience = _configuration.GetValue<string>("Jwt:Audience"),
+                        Issuer = _configuration.GetValue<string>("Jwt:Issuer"),
                         Expires = DateTime.UtcNow.AddDays(7),
                         SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
                     };
-                    var token = tokenHandler.CreateToken(tokenDescriptor);
-                   // return tokenHandler.WriteToken(token);
 
-                    //    var tokenHandler = new JwtSecurityTokenHandler();
-                    //    var key = Encoding.ASCII.GetBytes(_configuration.GetValue<string>("Jwt:secret"));
-                    //    var tokenDescription = new SecurityTokenDescriptor
-                    //    {
-                    //        Subject = data;
-                    //}),
-                    //        Audience = _configuration.GetValue<string>("Jwt:Audience"),
-                    //        Issuer = _configuration.GetValue<string>("Jwt:Issuer"),
-                    //        Expires = DateTime.UtcNow.AddDays(7),
-                    //        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-                    //    };
-
-                    //    var token = tokenHandler.CreateToken(tokenDescription);
+                    var token = tokenHandler.CreateToken(tokenDescription);
 
                     return Ok(tokenHandler.WriteToken(token));
-                   // return Ok(data);
                 }
             }
             else
