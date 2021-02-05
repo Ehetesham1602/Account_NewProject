@@ -19,6 +19,7 @@ namespace AccountErp.Factories
             {
                 CustomerId = model.CustomerId,
                 InvoiceNumber = "INV" + "-" + model.InvoiceDate.ToString("yy") + "-" + (count + 1).ToString("000"),
+                CreditMemoNumber = "CM" + "-" + model.InvoiceDate.ToString("yy") + "-" + (count + 1).ToString("000"),
                 Tax = model.Tax,
                 Discount = model.Discount,
                 TotalAmount = model.TotalAmount,
@@ -61,6 +62,7 @@ namespace AccountErp.Factories
 
             entity.CustomerId = model.CustomerId;
             entity.InvoiceNumber = "INV" + "-" + model.InvoiceDate.ToString("yy") + "-" + (count + 1).ToString("000");
+           entity.CreditMemoNumber = "CM" + "-" + model.InvoiceDate.ToString("yy") + "-" + (count + 1).ToString("000");
             entity.Tax = model.Tax;
             entity.Discount = model.Discount;
             entity.TotalAmount = model.TotalAmount;

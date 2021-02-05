@@ -1,13 +1,13 @@
-﻿using AccountErp.Utilities;
+﻿using AccountErp.Dtos.Customer;
+using AccountErp.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AccountErp.Entities
+namespace AccountErp.Dtos.CreditMemo
 {
- public   class CreditMemo
+  public  class CreditMemoDetailDto
     {
-
         public int Id { get; set; }
         public int CustomerId { get; set; }
         public string InvoiceNumber { get; set; }
@@ -20,7 +20,7 @@ namespace AccountErp.Entities
         public string CreatedBy { get; set; }
         public DateTime? UpdatedOn { get; set; }
         public string UpdatedBy { get; set; }
-        public Customer Customer { get; set; }
+     //   public Customer Customer { get; set; }
         public string StrInvoiceDate { get; set; }
         public DateTime InvoiceDate { get; set; }
         public string StrDueDate { get; set; }
@@ -29,9 +29,9 @@ namespace AccountErp.Entities
         public decimal? SubTotal { get; set; }
         public decimal? LineAmountSubTotal { get; set; }
         public int? InvoiceId { get; set; }
-        public Invoice Invoice { get; set; }
-        public string CreditMemoNumber { get; set; }
-        public ICollection<CreditMemoService> CreditMemoService { get; set; }
+        public CustomerDetailDto Customer { get; set; }
+        public IEnumerable<CreditMemoServiceDto> CreditMemoServiceDto { get; set; }
+
 
 
     }

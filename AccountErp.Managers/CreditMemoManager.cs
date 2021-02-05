@@ -42,5 +42,11 @@ namespace AccountErp.Managers
         {
             return await _creaditmemoRepository.GetPagedResultAsync(model);
         }
+
+
+        public async Task<CreditMemoDetailDto> GetDetailAsync(int id)
+        {
+            return await _creaditmemoRepository.GetDetailAsync(id);
+        }
     }
     }

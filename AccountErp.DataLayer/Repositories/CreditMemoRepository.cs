@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Linq.Dynamic.Core;
+using AccountErp.Dtos.Customer;
 
 namespace AccountErp.DataLayer.Repositories
 {
@@ -91,6 +92,65 @@ namespace AccountErp.DataLayer.Repositories
             }
 
             return pagedResult;
+        }
+
+        public async Task<CreditMemoDetailDto> GetDetailAsync(int id)
+        {
+            var creditmemo = await (from i in _dataContext.CreditMemo
+                                 join c in _dataContext.Customers
+                                 on i.CustomerId equals c.Id
+                                 where i.Id == id
+                                 select new CreditMemoDetailDto
+                                 {
+                                     Id = i.Id,
+                                     Tax = i.Tax,
+                                     Discount = i.Discount,
+                                     TotalAmount = i.TotalAmount,
+                                     Remark = i.Remark,
+                                     Status = i.Status,
+                                     CreatedOn = i.CreatedOn,
+                                     InvoiceDate = i.InvoiceDate,
+                                     StrInvoiceDate = i.StrInvoiceDate,
+                                     DueDate = i.DueDate,
+                                     StrDueDate = i.StrDueDate,
+                                     PoSoNumber = i.PoSoNumber,
+                                     InvoiceNumber = i.InvoiceNumber,
+                                     SubTotal = i.SubTotal,
+                                     Customer = new CustomerDetailDto
+                                     {
+                                         FirstName = c.FirstName,
+                                         LastName = c.LastName,
+                                         Email = c.Email,
+                                         Phone = c.Phone,
+                                         Discount = c.Discount,
+
+                                     },
+                                     CreditMemoServiceDto = i.CreditMemoService.Select(x => new CreditMemoServiceDto
+                                     {
+                                         Id = x.Id,
+                                         CreditMemoId = x.CreditMemoId,
+                                         ServiceId = x.ServiceId,
+                                         ProductId = x.ProductId,
+                                         Rate = x.Rate,
+                                         Price = x.Price,
+                                         TaxId = x.TaxId,
+                                         TaxPrice = x.TaxPrice,
+                                         TaxPercentage = x.TaxPercentage,
+                                         LineAmount = x.LineAmount,
+                                         OldQuantity = x.OldQuantity,
+                                         NewQuantity = x.NewQuantity,
+                                         BankAccountId = x.Product.BankAccountId
+
+
+                                     })
+                                     })
+                                     
+
+                                 
+                          .AsNoTracking()
+                          .SingleOrDefaultAsync();
+
+            return creditmemo;
         }
     }
 }

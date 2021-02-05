@@ -16,6 +16,7 @@ namespace AccountErp.Infrastructure.Repositories
         void Edit(CreditMemo entity);
 
         Task<JqDataTableResponse<CreditMemoListItemDto>> GetPagedResultAsync(CreditMemoJqDataTableRequestModel model);
+        Task<CreditMemoDetailDto> GetDetailAsync(int id);
 
 
     }

@@ -58,5 +58,17 @@ namespace AccountErp.Api.Controllers
             return Ok(pagedResult);
         }
 
+        [HttpGet]
+        [Route("get-detail/{id}")]
+        public async Task<IActionResult> GetDetail(int id)
+        {
+            var item = await _creditmemoManager.GetDetailAsync(id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+            return Ok(item);
+        }
+
     }
 }
