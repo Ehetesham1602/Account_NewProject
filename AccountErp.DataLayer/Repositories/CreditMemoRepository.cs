@@ -131,7 +131,7 @@ namespace AccountErp.DataLayer.Repositories
                                      {
                                          Id = x.ServiceId ?? 0,
                                          CreditMemoId = x.CreditMemoId,
-                                        // ServiceId = x.ServiceId,
+                                         ServiceId = x.ServiceId,
                                          ProductId = x.ProductId,
                                          Rate = x.Rate,
                                          Price = x.Price,
