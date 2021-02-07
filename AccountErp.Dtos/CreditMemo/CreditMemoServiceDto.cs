@@ -6,7 +6,7 @@ namespace AccountErp.Dtos.CreditMemo
 {
   public  class CreditMemoServiceDto
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public int CreditMemoId { get; set; }
         public int? ServiceId { get; set; }
         public int? ProductId { get; set; }
