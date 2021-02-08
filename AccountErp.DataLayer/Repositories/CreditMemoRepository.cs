@@ -108,6 +108,7 @@ namespace AccountErp.DataLayer.Repositories
                                  select new CreditMemoDetailDto
                                  {
                                      Id = i.Id,
+                                     CustomerId=i.CustomerId,
                                      Tax = i.Tax,
                                      Discount = i.Discount,
                                      TotalAmount = i.TotalAmount,
