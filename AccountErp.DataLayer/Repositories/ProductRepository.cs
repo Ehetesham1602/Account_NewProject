@@ -308,6 +308,23 @@ namespace AccountErp.DataLayer.Repositories
 
         }
 
+        public int InvoiceProductCount(int id)
+        {
+            var sum = _dataContext.InvoiceServices.Where(x => x.ProductId == id).Select(t => t.Quantity).Sum();
+            return sum;
+        }
+
+        public int BillProductCount(int id)
+        {
+            var sum = _dataContext.BillItems.Where(x => x.ProductId == id).Select(t => t.Quantity).Sum();
+            return sum;
+        }
+
+        public int CreditMemoProductCount(int id)
+        {
+            var sum = _dataContext.CreditMemoService.Where(x => x.ProductId == id).Select(t => t.OldQuantity - t.NewQuantity).Sum();
+            return sum;
+        }
 
     }
 }

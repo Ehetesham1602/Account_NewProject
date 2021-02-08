@@ -24,6 +24,7 @@ namespace AccountErp.Dtos.Product
         public int? ProductCategoryId { get; set; }
         public int? WarehouseId { get; set; }
         public string WarehouseName { get; set; }
+        public int AvailableStock { get; set; }
         public Constants.RecordStatus Status { get; set; }
     }
 }
