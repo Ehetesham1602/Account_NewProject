@@ -70,5 +70,23 @@ namespace AccountErp.Api.Controllers
             return Ok(item);
         }
 
+        [HttpPost]
+        [Route("edit")]
+        public async Task<IActionResult> Edit([FromBody] CreditMemoEditModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState.GetErrorList());
+            }
+            try
+            {
+                await _creditmemoManager.EditAsync(model);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            return Ok();
+        }
     }
 }

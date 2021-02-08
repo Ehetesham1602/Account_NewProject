@@ -19,6 +19,7 @@ namespace AccountErp.Managers
         private readonly IUnitOfWork _unitOfWork;
 
         private readonly string _userId;
+     
 
         public CreditMemoManager(IHttpContextAccessor contextAccessor,
             ICreditMemoRepository creaditmemoRepository,
@@ -47,6 +48,14 @@ namespace AccountErp.Managers
         public async Task<CreditMemoDetailDto> GetDetailAsync(int id)
         {
             return await _creaditmemoRepository.GetDetailAsync(id);
+        }
+
+        public async Task EditAsync(CreditMemoEditModel model)
+        {
+            var creaditmemo = await _creaditmemoRepository.GetAsync(model.Id);
+            CreditMemoFactory.Edit(model, creaditmemo, _userId);
+            _creaditmemoRepository.Edit(creaditmemo);
+            await _unitOfWork.SaveChangesAsync();
         }
     }
     }

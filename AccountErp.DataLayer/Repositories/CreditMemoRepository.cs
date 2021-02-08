@@ -40,6 +40,11 @@ namespace AccountErp.DataLayer.Repositories
             _dataContext.CreditMemo.Update(entity);
         }
 
+        public async Task<CreditMemo> GetAsync(int id)
+        {
+            return await _dataContext.CreditMemo.Include(x => x.CreditMemoService)
+                .SingleAsync(x => x.Id == id);
+        }
         public async Task<JqDataTableResponse<CreditMemoListItemDto>> GetPagedResultAsync(CreditMemoJqDataTableRequestModel model)
         {
             if (model.Length == 0)

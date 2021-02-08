@@ -15,6 +15,8 @@ namespace AccountErp.Infrastructure.Managers
         Task<JqDataTableResponse<CreditMemoListItemDto>> GetPagedResultAsync(CreditMemoJqDataTableRequestModel model);
 
         Task<CreditMemoDetailDto> GetDetailAsync(int id);
+        Task EditAsync(CreditMemoEditModel model);
+
 
     }
 }

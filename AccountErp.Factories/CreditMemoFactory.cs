@@ -2,6 +2,7 @@
 using AccountErp.Models.CreditMemo;
 using AccountErp.Utilities;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -56,13 +57,13 @@ namespace AccountErp.Factories
             return creditmemo;
         }
 
-        public static void Edit(CreditMemoEditModel model, CreditMemo entity, string userId, int count)
+        public static void Edit(CreditMemoEditModel model, CreditMemo entity, string userId)
         {
 
 
             entity.CustomerId = model.CustomerId;
-            entity.InvoiceNumber = "INV" + "-" + model.InvoiceDate.ToString("yy") + "-" + (count + 1).ToString("000");
-           entity.CreditMemoNumber = "CM" + "-" + model.InvoiceDate.ToString("yy") + "-" + (count + 1).ToString("000");
+           // entity.InvoiceNumber = "INV" + "-" + model.InvoiceDate.ToString("yy") + "-" + (count + 1).ToString("000");
+           //entity.CreditMemoNumber = "CM" + "-" + model.InvoiceDate.ToString("yy") + "-" + (count + 1).ToString("000");
             entity.Tax = model.Tax;
             entity.Discount = model.Discount;
             entity.TotalAmount = model.TotalAmount;
@@ -79,20 +80,29 @@ namespace AccountErp.Factories
             entity.LineAmountSubTotal = model.LineAmountSubTotal;
             entity.InvoiceId = model.InvoiceId;
             //   InvoiceType = model.InvoiceType,
-            model.CreditMemoService.Select(x => new CreditMemoService
+            ArrayList tempArr = new ArrayList();
+
+            foreach (var item in model.CreditMemoService)
             {
-                Id = Guid.NewGuid(),
-                ServiceId = x.ServiceId,
-                ProductId = x.ProductId,
-                Rate = x.Rate,
-                OldQuantity = x.OldQuantity,
-                NewQuantity = x.NewQuantity,
-                Price = x.Price,
-                TaxId = x.TaxId,
-                TaxPrice = x.TaxPrice,
-                TaxPercentage = x.TaxPercentage,
-                LineAmount = x.LineAmount
-            }).ToList();
+                var alreadyExistServices = new CreditMemoService();
+
+                tempArr.Add(item.ProductId);
+                alreadyExistServices = entity.CreditMemoService.Where(x => item.ProductId == x.ProductId).FirstOrDefault();
+                if (alreadyExistServices != null)
+                {
+                    alreadyExistServices.Price = item.Price;
+                    alreadyExistServices.TaxId = item.TaxId;
+                    alreadyExistServices.TaxPercentage = item.TaxPercentage;
+                    alreadyExistServices.Rate = item.Rate;
+                    alreadyExistServices.OldQuantity = item.OldQuantity;
+                    alreadyExistServices.NewQuantity = item.NewQuantity;
+                    alreadyExistServices.TaxPrice = item.TaxPrice;
+                    alreadyExistServices.LineAmount = item.LineAmount;
+                    entity.CreditMemoService.Add(alreadyExistServices);
+                }
+            }
+
+           
 
 
 
@@ -101,6 +111,8 @@ namespace AccountErp.Factories
 
 
 
+
+
+        }
     }
-}
 }
