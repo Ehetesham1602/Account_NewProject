@@ -78,7 +78,10 @@ namespace AccountErp.DataLayer.Repositories
                                 InvoiceNumber = i.InvoiceNumber,
                                 SubTotal = i.SubTotal,
                                 InvoiceId=i.InvoiceId,
-                            
+                                CreditMemoNumber=i.CreditMemoNumber,
+
+
+
                             })
                             .AsNoTracking();
 
@@ -123,6 +126,7 @@ namespace AccountErp.DataLayer.Repositories
                                      InvoiceNumber = i.InvoiceNumber,
                                      SubTotal = i.SubTotal,
                                      InvoiceId=i.InvoiceId,
+                                     CreditMemoNumber=i.CreditMemoNumber,
                                      Customer = new CustomerDetailDto
                                      {
                                          Id=c.Id,
@@ -160,5 +164,42 @@ namespace AccountErp.DataLayer.Repositories
 
             return creditmemo;
         }
+
+
+        public async Task<CreditMemoDetailDto> GetCreaditMemoforInvoice(int id)
+        {
+            var creditmemo = await (from i in _dataContext.CreditMemo
+                                    where i.Id == id
+                                    select new CreditMemoDetailDto
+                                    {
+                                        Id = i.Id,
+                                        CustomerId = i.CustomerId,
+                                        Tax = i.Tax,
+                                        Discount = i.Discount,
+                                        TotalAmount = i.TotalAmount,
+                                        Remark = i.Remark,
+                                        Status = i.Status,
+                                        CreatedOn = i.CreatedOn,
+                                        InvoiceDate = i.InvoiceDate,
+                                        StrInvoiceDate = i.StrInvoiceDate,
+                                        DueDate = i.DueDate,
+                                        StrDueDate = i.StrDueDate,
+                                        PoSoNumber = i.PoSoNumber,
+                                        InvoiceNumber = i.InvoiceNumber,
+                                        SubTotal = i.SubTotal,
+                                        InvoiceId = i.InvoiceId,
+                                        CreditMemoNumber = i.CreditMemoNumber,
+                                       
+                                        
+                                    })
+
+
+
+                          .AsNoTracking()
+                          .SingleOrDefaultAsync();
+
+            return creditmemo;
+        }
+
     }
 }

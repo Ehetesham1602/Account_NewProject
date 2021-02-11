@@ -15,6 +15,9 @@ namespace AccountErp.Infrastructure.Managers
 
         Task<InvoiceDetailDto> GetDetailAsync(int id);
 
+        Task<InvoiceDetailDto> GetDetailAsyncforpyment(int id);
+
+
         Task<InvoiceDetailForEditDto> GetForEditAsync(int id);
 
         Task<JqDataTableResponse<InvoiceListItemDto>> GetPagedResultAsync(InvoiceJqDataTableRequestModel model);

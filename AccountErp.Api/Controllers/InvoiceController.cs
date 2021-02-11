@@ -85,6 +85,33 @@ namespace AccountErp.Api.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
+        [Route("get-detail/{id}")]
+        public async Task<IActionResult> GetDetailAsyncforpyment(int id)
+        {
+            var invoice = await _invoiceManager.GetDetailAsyncforpyment(id);
+
+            if (invoice == null)
+            {
+                return NotFound();
+            }
+
+            if (invoice.Attachments == null)
+            {
+                return Ok(invoice);
+            }
+
+            invoice.Attachments = invoice.Attachments.ToList();
+
+            foreach (var attachment in invoice.Attachments)
+            {
+                attachment.FileUrl = Utility.GetTempFileUrl(Request.GetBaseUrl(), attachment.FileName);
+            }
+
+            return Ok(invoice);
+        }
+
+        [HttpGet]
         [Route("get-for-edit/{id}")]
         public async Task<IActionResult> GetForEdit(int id)
         {
