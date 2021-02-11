@@ -73,6 +73,9 @@ namespace AccountErp.DataLayer.Repositories
                                 Discount = i.Discount,
                                 Tax = i.Tax,
                                 TotalAmount = i.TotalAmount,
+                                NewAmmount=i.NewAmmount,
+                                OldAmmount=i.OldAmmount,
+                                DiffAmmount=i.DiffAmmount,
                                 CreatedOn = i.CreatedOn,
                                 Status = i.Status,
                                 InvoiceNumber = i.InvoiceNumber,
@@ -124,6 +127,9 @@ namespace AccountErp.DataLayer.Repositories
                                      StrDueDate = i.StrDueDate,
                                      PoSoNumber = i.PoSoNumber,
                                      InvoiceNumber = i.InvoiceNumber,
+                                     OldAmmount=i.OldAmmount,
+                                     NewAmmount=i.NewAmmount,
+                                     DiffAmmount=i.DiffAmmount,
                                      SubTotal = i.SubTotal,
                                      InvoiceId=i.InvoiceId,
                                      CreditMemoNumber=i.CreditMemoNumber,
@@ -140,6 +146,9 @@ namespace AccountErp.DataLayer.Repositories
                                      CreditMemoServiceDto = i.CreditMemoService.Select(x => new CreditMemoServiceDto
                                      {
                                          Id = x.ServiceId ?? 0,
+                                         OldAmmount=x.OldAmmount,
+                                         NewAmmount=x.NewAmmount,
+                                         DiffAmmount=x.DiffAmmount,
                                          CreditMemoId = x.CreditMemoId,
                                          ServiceId = x.ServiceId,
                                          ProductId = x.ProductId,
@@ -152,6 +161,7 @@ namespace AccountErp.DataLayer.Repositories
                                          OldQuantity = x.OldQuantity,
                                          NewQuantity = x.NewQuantity,
                                          BankAccountId = x.Product.BankAccountId
+                                         
 
 
                                      })
@@ -177,6 +187,9 @@ namespace AccountErp.DataLayer.Repositories
                                         Tax = i.Tax,
                                         Discount = i.Discount,
                                         TotalAmount = i.TotalAmount,
+                                        OldAmmount=i.OldAmmount,
+                                        NewAmmount=i.NewAmmount,
+                                        DiffAmmount=i.DiffAmmount,
                                         Remark = i.Remark,
                                         Status = i.Status,
                                         CreatedOn = i.CreatedOn,

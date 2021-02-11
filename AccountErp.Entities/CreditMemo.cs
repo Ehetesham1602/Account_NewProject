@@ -5,7 +5,7 @@ using System.Text;
 
 namespace AccountErp.Entities
 {
- public   class CreditMemo
+    public class CreditMemo
     {
 
         public int Id { get; set; }
@@ -30,6 +30,9 @@ namespace AccountErp.Entities
         public decimal? LineAmountSubTotal { get; set; }
         public int? InvoiceId { get; set; }
         public Invoice Invoice { get; set; }
+        public Decimal OldAmmount{get; set;}
+        public Decimal NewAmmount { get; set; }
+        public Decimal DiffAmmount { get; set; }
         public string CreditMemoNumber { get; set; }
         public ICollection<CreditMemoService> CreditMemoService { get; set; }
 

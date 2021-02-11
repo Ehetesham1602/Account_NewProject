@@ -177,16 +177,7 @@ namespace AccountErp.Managers
         }
         public async Task<InvoiceDetailDto> GetDetailAsyncforpyment(int id)
         {
-            var data =await _creditMemoRepository.GetCreaditMemoforInvoice(id);
-            var memo=await _invoiceRepository.GetDetailAsyncforpyment(id);
-            if (data!=null)
-            {
-                var ammount = data.TotalAmount - memo.TotalAmount;
-                var total= data.TotalAmount - ammount;
-                memo.TotalAmount = total;
-            }
-
-            return memo;
+            return await _invoiceRepository.GetDetailAsyncforpyment(id);
         }
 
         public async Task<InvoiceDetailForEditDto> GetForEditAsync(int id)
