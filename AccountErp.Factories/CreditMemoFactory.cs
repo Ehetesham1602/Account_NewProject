@@ -19,7 +19,7 @@ namespace AccountErp.Factories
             var creditmemo = new CreditMemo
             {
                 CustomerId = model.CustomerId,
-                InvoiceNumber = "INV" + "-" + model.InvoiceDate.ToString("yy") + "-" + (count + 1).ToString("000"),
+             //   InvoiceNumber = "INV" + "-" + model.InvoiceDate.ToString("yy") + "-" + (count + 1).ToString("000"),
                 CreditMemoNumber = "CM" + "-" + model.InvoiceDate.ToString("yy") + "-" + (count + 1).ToString("000"),
                 Tax = model.Tax,
                 Discount = model.Discount,
