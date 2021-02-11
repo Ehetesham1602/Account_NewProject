@@ -169,7 +169,7 @@ namespace AccountErp.DataLayer.Repositories
         public async Task<CreditMemoDetailDto> GetCreaditMemoforInvoice(int id)
         {
             var creditmemo = await (from i in _dataContext.CreditMemo
-                                    where i.Id == id
+                                    where i.InvoiceId == id
                                     select new CreditMemoDetailDto
                                     {
                                         Id = i.Id,

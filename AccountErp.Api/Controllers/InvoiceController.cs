@@ -86,7 +86,7 @@ namespace AccountErp.Api.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        [Route("get-detail/{id}")]
+        [Route("get-details/{id}")]
         public async Task<IActionResult> GetDetailAsyncforpyment(int id)
         {
             var invoice = await _invoiceManager.GetDetailAsyncforpyment(id);
