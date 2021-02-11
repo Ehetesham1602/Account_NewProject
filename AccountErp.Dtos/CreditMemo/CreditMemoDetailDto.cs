@@ -29,6 +29,8 @@ namespace AccountErp.Dtos.CreditMemo
         public decimal? SubTotal { get; set; }
         public decimal? LineAmountSubTotal { get; set; }
         public int? InvoiceId { get; set; }
+        public string CreditMemoNumber { get; set; }
+
         public CustomerDetailDto Customer { get; set; }
         public IEnumerable<CreditMemoServiceDto> CreditMemoServiceDto { get; set; }
 

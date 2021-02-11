@@ -21,6 +21,8 @@ namespace AccountErp.Dtos.Invoice
         public decimal? SubTotal { get; set; }
         public decimal TotalAmount { get; set; }
         public DateTime CreatedOn { get; set; }
+        public int? CreaditMemoId { get; set; }
+
         public Constants.InvoiceStatus Status { get; set; }
         public Constants.InvoiceType InvoiceType { get; set; }
     }

@@ -33,6 +33,8 @@ namespace AccountErp.Dtos.CreditMemo
 
         public decimal Amount { get; set; }
 
+        public string CreditMemoNumber { get; set; }
+
 
         public int? InvoiceId { get; set; }
       //  public Invoice Invoice { get; set; }

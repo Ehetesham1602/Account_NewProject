@@ -48,32 +48,36 @@ namespace AccountErp.Managers
         public async Task<ProductDetailDto> GetDetailAsync(int id)
         {
             var data = await _repository.GetDetailAsync(id);
-            var invSum = _repository.InvoiceProductCount(id);
-            var billSum = _repository.BillProductCount(id);
-            var creditSum = _repository.CreditMemoProductCount(id);
+            var invSum = _repository.InvoiceProductCount(id, null, null);
+            var billSum = _repository.BillProductCount(id, null, null);
+            var creditSum = _repository.CreditMemoProductCount(id, null, null);
             data.AvailableStock = data.InitialStock + billSum + creditSum - invSum ?? 0;
             return data;
         }
+
 
         public async Task<JqDataTableResponse<ProductListItemDto>> GetPagedResultAsync(ProductJqDataTableRequestModel model)
         {
             return await _repository.GetPagedResultAsync(model);
         }
 
+
         public async Task<JqDataTableResponse<ProductListItemDto>> GetInventoryPagedResultAsync(ProductInventoryJqDataTableRequestModel model)
         {
-           
+
             var response = await _repository.GetInventoryPagedResultAsync(model);
-            foreach(var item in response.Data)
+            foreach (var item in response.Data)
             {
-                var invSum = _repository.InvoiceProductCount(item.Id);
-                var billSum = _repository.BillProductCount(item.Id);
-                var creditSum = _repository.CreditMemoProductCount(item.Id);
+                var invSum = _repository.InvoiceProductCount(item.Id, model.StartDate, model.EndDate);
+                var billSum = _repository.BillProductCount(item.Id, model.StartDate, model.EndDate);
+                var creditSum = _repository.CreditMemoProductCount(item.Id, model.StartDate, model.EndDate);
+                //  var invCountByDate = _repository.InvoiceProductCountWithDate(item.Id, model.StartDate, model.EndDate);
                 var count = item.InitialStock + billSum + creditSum - invSum;
                 item.InitialStock = count;
             }
             return response;
         }
+
 
         public async Task<IEnumerable<SelectListItemDto>> GetSelectItemsAsync()
         {
@@ -85,9 +89,9 @@ namespace AccountErp.Managers
             var response = await _repository.GetAllAsync(status);
             foreach (var item in response)
             {
-                var invSum = _repository.InvoiceProductCount(item.Id);
-                var billSum = _repository.BillProductCount(item.Id);
-                var creditSum = _repository.CreditMemoProductCount(item.Id);
+                var invSum = _repository.InvoiceProductCount(item.Id, null, null);
+                var billSum = _repository.BillProductCount(item.Id, null, null);
+                var creditSum = _repository.CreditMemoProductCount(item.Id, null, null);
                 var count = item.InitialStock + billSum + creditSum - invSum;
                 item.AvailableStock = count ?? 0;
             }
