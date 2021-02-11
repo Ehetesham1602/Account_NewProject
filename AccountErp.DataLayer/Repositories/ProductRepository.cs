@@ -308,40 +308,21 @@ namespace AccountErp.DataLayer.Repositories
 
         }
 
-        public int InvoiceProductCount(int id, DateTime? startDate, DateTime? endDate)
+        public int InvoiceProductCount(int id)
         {
-            //var sum = _dataContext.InvoiceServices.Where(x => x.ProductId == id).Select(t => t.Quantity).Sum();
-            //return sum;
-            var sum = _dataContext.Invoices.Where(x =>
-           (startDate == null || x.CreatedOn >= startDate) && (endDate == null || x.CreatedOn <= endDate))
-                .Select(t => t.Services.Where(y => y.ProductId == id).Sum(p => p.Quantity)).Sum();
+            var sum = _dataContext.InvoiceServices.Where(x => x.ProductId == id).Select(t => t.Quantity).Sum();
             return sum;
         }
 
-        //public int InvoiceProductCountWithDate(int id,DateTime? startDate, DateTime? endDate)
-        //{
-        //    var sum = _dataContext.Invoices.Where(x =>
-        //   (startDate == null || x.CreatedOn >= startDate) && (endDate == null || x.CreatedOn <= endDate))
-        //        .Select(t => t.Services.Where(y => y.ProductId == id).Sum(p => p.Quantity)).Sum();
-        //    return sum;
-        //}
-        public int BillProductCount(int id, DateTime? startDate, DateTime? endDate)
+        public int BillProductCount(int id)
         {
-            //var sum = _dataContext.BillItems.Where(x => x.ProductId == id).Select(t => t.Quantity).Sum();
-            //return sum;
-            var sum = _dataContext.Bills.Where(x =>
-         (startDate == null || x.CreatedOn >= startDate) && (endDate == null || x.CreatedOn <= endDate))
-              .Select(t => t.Items.Where(y => y.ProductId == id).Sum(p => p.Quantity)).Sum();
+            var sum = _dataContext.BillItems.Where(x => x.ProductId == id).Select(t => t.Quantity).Sum();
             return sum;
         }
 
-        public int CreditMemoProductCount(int id, DateTime? startDate, DateTime? endDate)
+        public int CreditMemoProductCount(int id)
         {
-            //var sum = _dataContext.CreditMemoService.Where(x => x.ProductId == id).Select(t => t.OldQuantity - t.NewQuantity).Sum();
-            //return sum;
-            var sum = _dataContext.CreditMemo.Where(x =>
-    (startDate == null || x.CreatedOn >= startDate) && (endDate == null || x.CreatedOn <= endDate))
-         .Select(t => t.CreditMemoService.Where(y => y.ProductId == id).Sum(p => p.OldQuantity - p.NewQuantity)).Sum();
+            var sum = _dataContext.CreditMemoService.Where(x => x.ProductId == id).Select(t => t.OldQuantity - t.NewQuantity).Sum();
             return sum;
         }
 

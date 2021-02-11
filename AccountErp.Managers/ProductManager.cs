@@ -48,9 +48,9 @@ namespace AccountErp.Managers
         public async Task<ProductDetailDto> GetDetailAsync(int id)
         {
             var data = await _repository.GetDetailAsync(id);
-            var invSum = _repository.InvoiceProductCount(id,null,null);
-            var billSum = _repository.BillProductCount(id, null, null);
-            var creditSum = _repository.CreditMemoProductCount(id, null, null);
+            var invSum = _repository.InvoiceProductCount(id);
+            var billSum = _repository.BillProductCount(id);
+            var creditSum = _repository.CreditMemoProductCount(id);
             data.AvailableStock = data.InitialStock + billSum + creditSum - invSum ?? 0;
             return data;
         }
@@ -66,10 +66,9 @@ namespace AccountErp.Managers
             var response = await _repository.GetInventoryPagedResultAsync(model);
             foreach(var item in response.Data)
             {
-                var invSum = _repository.InvoiceProductCount(item.Id, model.StartDate, model.EndDate);
-                var billSum = _repository.BillProductCount(item.Id, model.StartDate, model.EndDate);
-                var creditSum = _repository.CreditMemoProductCount(item.Id, model.StartDate, model.EndDate);
-              //  var invCountByDate = _repository.InvoiceProductCountWithDate(item.Id, model.StartDate, model.EndDate);
+                var invSum = _repository.InvoiceProductCount(item.Id);
+                var billSum = _repository.BillProductCount(item.Id);
+                var creditSum = _repository.CreditMemoProductCount(item.Id);
                 var count = item.InitialStock + billSum + creditSum - invSum;
                 item.InitialStock = count;
             }
@@ -86,9 +85,9 @@ namespace AccountErp.Managers
             var response = await _repository.GetAllAsync(status);
             foreach (var item in response)
             {
-                var invSum = _repository.InvoiceProductCount(item.Id, null, null);
-                var billSum = _repository.BillProductCount(item.Id, null, null);
-                var creditSum = _repository.CreditMemoProductCount(item.Id, null, null);
+                var invSum = _repository.InvoiceProductCount(item.Id);
+                var billSum = _repository.BillProductCount(item.Id);
+                var creditSum = _repository.CreditMemoProductCount(item.Id);
                 var count = item.InitialStock + billSum + creditSum - invSum;
                 item.AvailableStock = count ?? 0;
             }
