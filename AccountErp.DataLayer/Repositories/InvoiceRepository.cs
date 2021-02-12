@@ -131,6 +131,96 @@ namespace AccountErp.DataLayer.Repositories
             return invoice;
         }
 
+        public async Task<InvoiceDetailDto> GetDetailAsyncforpyment(int id)
+        {
+            var invoice = await (from i in _dataContext.Invoices
+                                 join c in _dataContext.Customers
+                                 on i.CustomerId equals c.Id
+                                 where i.Id == id
+                                 select new InvoiceDetailDto
+                                 {
+                                     Id = i.Id,
+                                     Tax = i.Tax,
+                                     Discount = i.Discount,
+                                     TotalAmount = i.TotalAmount,
+                                     Remark = i.Remark,
+                                     Status = i.Status,
+                                     CreatedOn = i.CreatedOn,
+                                     InvoiceDate = i.InvoiceDate,
+                                     StrInvoiceDate = i.StrInvoiceDate,
+                                     DueDate = i.DueDate,
+                                     StrDueDate = i.StrDueDate,
+                                     PoSoNumber = i.PoSoNumber,
+                                     InvoiceNumber = i.InvoiceNumber,
+                                     SubTotal = i.SubTotal,
+                                     InvoiceType = i.InvoiceType,
+                                     Customer = new CustomerDetailDto
+                                     {
+                                         FirstName = c.FirstName,
+                                         LastName = c.LastName,
+                                         Email = c.Email,
+                                         Phone = c.Phone,
+                                         Discount = c.Discount,
+                                         Address = new AddressDto
+                                         {
+                                             StreetNumber = c.Address.StreetNumber,
+                                             StreetName = c.Address.StreetName,
+                                             City = c.Address.City,
+                                             State = c.Address.State,
+                                             CountryName = c.Address.Country.Name,
+                                             PostalCode = c.Address.PostalCode
+                                         }
+                                     },
+                                     Items = i.InvoiceType == 0 ? i.Services.Select(x => new InvoiceServiceDto
+                                     {
+                                         Id = x.ServiceId ?? 0,
+                                         Type = x.Service.Name,
+                                         Rate = x.Rate,
+                                         Name = x.Service.Name,
+                                         Description = x.Service.Description,
+                                         Quantity = x.Quantity,
+                                         Price = x.Price,
+                                         TaxId = x.TaxId,
+                                         TaxPrice = x.TaxPrice,
+                                         TaxPercentage = x.TaxPercentage,
+                                         LineAmount = x.LineAmount,
+                                         BankAccountId = x.Service.BankAccountId,
+                                         TaxBankAccountId = x.Taxes.BankAccountId
+                                     }) :
+
+
+                                      i.Services.Select(x => new InvoiceServiceDto
+                                      {
+                                          Id = x.ProductId ?? 0,
+                                          Type = x.Product.Name,
+                                          Rate = x.Rate,
+                                          Name = x.Product.Name,
+                                          Description = x.Product.Description,
+                                          Quantity = x.Quantity,
+                                          Price = x.Price,
+                                          TaxId = x.TaxId,
+                                          TaxPrice = x.TaxPrice,
+                                          TaxPercentage = x.TaxPercentage,
+                                          LineAmount = x.LineAmount,
+                                          BankAccountId = x.Product.BankAccountId,
+                                          TaxBankAccountId = x.Product.BankAccountId
+                                      })
+                                     ,
+                                     Attachments = i.Attachments.Select(x => new InvoiceAttachmentDto
+                                     {
+                                         Id = x.Id,
+                                         Title = x.Title,
+                                         FileName = x.FileName,
+                                         OriginalFileName = x.OriginalFileName
+                                     })
+                                 })
+                          .AsNoTracking()
+                          .SingleOrDefaultAsync();
+
+            return invoice;
+        }
+
+
         public async Task<InvoiceDetailForEditDto> GetForEditAsync(int id)
         {
             return await (from i in _dataContext.Invoices
@@ -216,6 +306,9 @@ namespace AccountErp.DataLayer.Repositories
             var linqstmt = (from i in _dataContext.Invoices
                             join c in _dataContext.Customers
                             on i.CustomerId equals c.Id
+                            join cm in _dataContext.CreditMemo
+                            on i.Id equals cm.InvoiceId into inv
+                            from cm in inv.DefaultIfEmpty()
                             where (model.CustomerId == null
                                     || i.CustomerId == model.CustomerId.Value)
                                 && (model.FilterKey == null
@@ -238,7 +331,11 @@ namespace AccountErp.DataLayer.Repositories
                                 Status = i.Status,
                                 InvoiceNumber = i.InvoiceNumber,
                                 SubTotal = i.SubTotal,
-                                InvoiceType = i.InvoiceType
+                                InvoiceType = i.InvoiceType,
+                                CreaditMemoId=cm.Id
+                                
+                                
+                                
                             })
                             .AsNoTracking();
 

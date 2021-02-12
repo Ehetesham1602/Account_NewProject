@@ -19,11 +19,14 @@ namespace AccountErp.Factories
             var creditmemo = new CreditMemo
             {
                 CustomerId = model.CustomerId,
-                InvoiceNumber = "INV" + "-" + model.InvoiceDate.ToString("yy") + "-" + (count + 1).ToString("000"),
+             //   InvoiceNumber = "INV" + "-" + model.InvoiceDate.ToString("yy") + "-" + (count + 1).ToString("000"),
                 CreditMemoNumber = "CM" + "-" + model.InvoiceDate.ToString("yy") + "-" + (count + 1).ToString("000"),
                 Tax = model.Tax,
                 Discount = model.Discount,
                 TotalAmount = model.TotalAmount,
+                OldAmmount=model.OldAmmount,
+                NewAmmount=model.NewAmmount,
+                DiffAmmount=model.DiffAmmount,
                 Remark = model.Remark,
                 Status = Constants.InvoiceStatus.Pending,
                 CreatedBy = userId ?? "0",
@@ -49,7 +52,10 @@ namespace AccountErp.Factories
                     TaxId = x.TaxId,
                     TaxPrice = x.TaxPrice,
                     TaxPercentage = x.TaxPercentage,
-                    LineAmount = x.LineAmount
+                    LineAmount = x.LineAmount,
+                    OldAmmount=x.OldAmmount,
+                    NewAmmount=x.NewAmmount,
+                    DiffAmmount=x.DiffAmmount
                 }).ToList()
             };
 
@@ -67,6 +73,9 @@ namespace AccountErp.Factories
             entity.Tax = model.Tax;
             entity.Discount = model.Discount;
             entity.TotalAmount = model.TotalAmount;
+            entity.OldAmmount = model.OldAmmount;
+            entity.NewAmmount = model.NewAmmount;
+            entity.DiffAmmount = model.DiffAmmount;
             entity.Remark = model.Remark;
             entity.Status = Constants.InvoiceStatus.Pending;
             entity.CreatedBy = userId ?? "0";

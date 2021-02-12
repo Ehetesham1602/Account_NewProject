@@ -13,6 +13,9 @@ namespace AccountErp.Models.CreditMemo
         public decimal? Tax { get; set; }
         public decimal? Discount { get; set; }
         public decimal TotalAmount { get; set; }
+        public Decimal OldAmmount { get; set; }
+        public Decimal NewAmmount { get; set; }
+        public Decimal DiffAmmount { get; set; }
         public string Remark { get; set; }
         public Constants.InvoiceStatus Status { get; set; }
         public DateTime CreatedOn { get; set; }

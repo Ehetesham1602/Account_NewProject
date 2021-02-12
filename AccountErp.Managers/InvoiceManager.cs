@@ -20,6 +20,7 @@ namespace AccountErp.Managers
         private readonly ICustomerRepository _customerRepository;
         private readonly ITransactionRepository _transactionRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly ICreditMemoRepository _creditMemoRepository;
 
         private readonly string _userId;
 
@@ -28,13 +29,15 @@ namespace AccountErp.Managers
             IUnitOfWork unitOfWork,
             IItemRepository itemRepository,
              ITransactionRepository transactionRepository,
-            ICustomerRepository customerRepository)
+            ICustomerRepository customerRepository,
+           ICreditMemoRepository creditMemoRepository )
         {
             _userId = contextAccessor.HttpContext.User.GetUserId();
             _invoiceRepository = invoiceRepository;
             _itemRepository = itemRepository;
             _customerRepository = customerRepository;
             _transactionRepository = transactionRepository;
+            _creditMemoRepository = creditMemoRepository;
             _unitOfWork = unitOfWork;
         }
 
@@ -171,6 +174,10 @@ namespace AccountErp.Managers
         public async Task<InvoiceDetailDto> GetDetailAsync(int id)
         {
             return await _invoiceRepository.GetDetailAsync(id);
+        }
+        public async Task<InvoiceDetailDto> GetDetailAsyncforpyment(int id)
+        {
+            return await _invoiceRepository.GetDetailAsyncforpyment(id);
         }
 
         public async Task<InvoiceDetailForEditDto> GetForEditAsync(int id)
