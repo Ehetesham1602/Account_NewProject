@@ -38,6 +38,7 @@ namespace AccountErp.Factories
                 PoSoNumber = model.PoSoNumber,
                 SubTotal = model.SubTotal,
                 LineAmountSubTotal = model.LineAmountSubTotal,
+                InvoiceNumber=model.InvoiceNumber,
                 InvoiceId = model.InvoiceId,
                 //   InvoiceType = model.InvoiceType,
                 CreditMemoService = model.CreditMemoService.Select(x => new CreditMemoService
@@ -55,7 +56,8 @@ namespace AccountErp.Factories
                     LineAmount = x.LineAmount,
                     OldAmmount=x.OldAmmount,
                     NewAmmount=x.NewAmmount,
-                    DiffAmmount=x.DiffAmmount
+                    DiffAmmount=x.DiffAmmount,
+                    TaxDiffAmmount=x.TaxDiffAmmount
                 }).ToList()
             };
 

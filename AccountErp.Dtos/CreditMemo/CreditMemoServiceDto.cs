@@ -21,6 +21,8 @@ namespace AccountErp.Dtos.CreditMemo
         public Decimal OldAmmount { get; set; }
         public Decimal NewAmmount { get; set; }
         public Decimal DiffAmmount { get; set; }
+        public Decimal TaxDiffAmmount { get; set; }
+
 
         public int? BankAccountId { get; set; }
 

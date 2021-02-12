@@ -26,6 +26,7 @@ namespace AccountErp.Entities
         public Product Product { get; set; }
         public SalesTax Taxes { get; set; }
         public Item Item { get; set; }
+        public decimal TaxDiffAmmount { get; set; }
 
 
     }

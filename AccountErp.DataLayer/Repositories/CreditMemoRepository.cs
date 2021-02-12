@@ -160,7 +160,8 @@ namespace AccountErp.DataLayer.Repositories
                                          LineAmount = x.LineAmount,
                                          OldQuantity = x.OldQuantity,
                                          NewQuantity = x.NewQuantity,
-                                         BankAccountId = x.Product.BankAccountId
+                                         BankAccountId = x.Product.BankAccountId,
+                                         TaxDiffAmmount=x.TaxDiffAmmount
                                          
 
 
