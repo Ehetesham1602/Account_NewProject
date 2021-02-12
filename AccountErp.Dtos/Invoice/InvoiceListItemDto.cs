@@ -1,5 +1,7 @@
-﻿using AccountErp.Utilities;
+﻿using AccountErp.Dtos.CreditMemo;
+using AccountErp.Utilities;
 using System;
+using System.Collections.Generic;
 
 namespace AccountErp.Dtos.Invoice
 {
@@ -23,5 +25,7 @@ namespace AccountErp.Dtos.Invoice
         public DateTime CreatedOn { get; set; }
         public Constants.InvoiceStatus Status { get; set; }
         public Constants.InvoiceType InvoiceType { get; set; }
+        public bool isCreditMemo { get; set; } 
+       
     }
 }
