@@ -19,6 +19,7 @@ namespace AccountErp.Dtos.Customer
         public CustomerDetailDto Customer { get; set; }
         public ShippingAddressDto ShippingAddress { get; set; }
         public IEnumerable<InvoiceListItemDto> InvoiceList { get; set; }
+        public List<InvoiceListItemDto> InvoiceNewList { get; set; }
         public decimal openingBalance { get; set; }
         public DateTime CreatedOn { get; set; }
     }

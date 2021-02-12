@@ -1,5 +1,6 @@
 ﻿using AccountErp.Dtos;
 using AccountErp.Dtos.Address;
+using AccountErp.Dtos.CreditMemo;
 using AccountErp.Dtos.Customer;
 using AccountErp.Dtos.Invoice;
 using AccountErp.Dtos.ShippingAddress;
@@ -247,6 +248,9 @@ namespace AccountErp.DataLayer.Repositories
             var customerStatement = await (from i in _dataContext.Invoices
                                             join c in _dataContext.Customers
                                             on i.CustomerId equals c.Id
+                                           // join cm in _dataContext.CreditMemo
+                                          //  on i.Id equals cm.InvoiceId into inv
+                                           // from cm in inv.DefaultIfEmpty()
                                            where(i.CustomerId == model.CustomerId) && i.Status != Constants.InvoiceStatus.Deleted
                                            select new CustomerStatementDto
                                            {
@@ -285,11 +289,55 @@ namespace AccountErp.DataLayer.Repositories
                                                    TotalAmount = x.TotalAmount,
                                                    CreatedOn = x.CreatedOn,
                                                    InvoiceNumber = x.InvoiceNumber,
-                                                   Status = x.Status
+                                                   Status = x.Status,
+                                                   isCreditMemo = false
+
                                                })
+                                               /*CreditMemo = cm != null ? new CreditMemoListItemDto
+                                               {
+                                                   Id = cm.Id,
+                                                   CustomerId = cm.CustomerId,
+                                                   LineAmountSubTotal = cm.LineAmountSubTotal,
+                                                   Status = cm.Status,
+                                                   TotalAmount = cm.TotalAmount,
+                                                   CreatedBy = cm.CreatedBy,
+                                                   CreatedOn = cm.CreatedOn,
+                                                   Discount = cm.Discount,
+                                                   InvoiceDate = cm.InvoiceDate,
+                                                   DueDate = cm.DueDate,
+                                                   StrDueDate = cm.StrDueDate,
+                                                   StrInvoiceDate = cm.StrInvoiceDate,
+                                                   InvoiceNumber = cm.InvoiceNumber,
+                                                   InvoiceId = cm.InvoiceId
+
+                                               } : null*/
                                            })
                           .AsNoTracking().ToListAsync();
             return customerStatement.FirstOrDefault();
+        }
+        public async Task<List<InvoiceListItemDto>> GetCreditMemo(CustomerStatementDto model)
+        {
+            var invoice = await (from cm in _dataContext.CreditMemo 
+                                           join i in _dataContext.Invoices
+                                            on cm.InvoiceId  equals i.Id
+                                           where (cm.CustomerId == model.CustomerId) && i.Status != Constants.InvoiceStatus.Deleted
+                                           select  new InvoiceListItemDto
+                                           {
+                                               CustomerId =cm.CustomerId,
+                                               Status = cm.Status,
+                                               TotalAmount = cm.TotalAmount,
+                                               CreatedOn = cm.CreatedOn,
+                                               Discount = cm.Discount,
+                                               InvoiceDate = cm.InvoiceDate,
+                                               DueDate = cm.DueDate,
+                                               StrDueDate = cm.StrDueDate,
+                                               StrInvoiceDate = cm.StrInvoiceDate,
+                                               InvoiceNumber = cm.InvoiceNumber + "/" + cm.CreditMemoNumber,
+                                               Id = cm.Id,
+                                               isCreditMemo = true
+
+                                           }).AsNoTracking().ToListAsync();
+            return invoice;
         }
         public async Task<List<InvoiceListItemDto>> GetOpeningBalance(DateTime date, int custId)
         {

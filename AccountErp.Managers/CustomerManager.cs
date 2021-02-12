@@ -100,13 +100,38 @@ namespace AccountErp.Managers
                 var data = await _customerRepository.GetOpeningBalance(model.startDate,model.CustomerId);
                 model.openingBalance = data.Sum(x => x.Amount);
                 var customerData = await _customerRepository.GetCustomerStatementAsync(model);
+                var creditMemo = await _customerRepository.GetCreditMemo(model);
                 customerData.InvoiceList = customerData.InvoiceList.Where(p => (p.InvoiceDate >= model.startDate && p.InvoiceDate <= model.endDate) && p.Status != Constants.InvoiceStatus.Deleted).ToList();
+                customerData.InvoiceNewList = new List<Dtos.Invoice.InvoiceListItemDto>();
+                foreach (var item in customerData.InvoiceList)
+                {
+                    customerData.InvoiceNewList.Add(item);
+                }
+                foreach (var item in creditMemo)
+                {
+                    customerData.InvoiceNewList.Add(item);
+                }
+
+                customerData.InvoiceNewList = customerData.InvoiceNewList.OrderBy(x => x.Id).ToList();
                 return customerData;
 
             }
             else
             {
-                return await _customerRepository.GetCustomerStatementAsync(model);
+                var customerData = await _customerRepository.GetCustomerStatementAsync(model);
+                var creditMemo = await _customerRepository.GetCreditMemo(model);
+                customerData.InvoiceNewList = new List<Dtos.Invoice.InvoiceListItemDto>();
+                foreach (var item in customerData.InvoiceList)
+                {
+                    customerData.InvoiceNewList.Add(item);
+                }
+                foreach (var item in creditMemo)
+                {
+                    customerData.InvoiceNewList.Add(item);
+                }
+
+                customerData.InvoiceNewList = customerData.InvoiceNewList.OrderBy(x => x.Id).ToList();
+                return customerData;
             }
            
         }

@@ -17,6 +17,8 @@ namespace AccountErp.Models.CreditMemo
         public decimal LineAmount { get; set; }
         public int OldQuantity { get; set; }
         public int NewQuantity { get; set; }
+        public int TaxBankAccountId { get; set; }
+        public int BankAccountId { get; set; }
         public Decimal OldAmmount { get; set; }
         public Decimal NewAmmount { get; set; }
         public Decimal DiffAmmount { get; set; }

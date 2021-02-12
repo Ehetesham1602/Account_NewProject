@@ -197,6 +197,53 @@ namespace AccountErp.Factories
 
             return transaction;
         }
+
+        public static Transaction CreateByCreditMemo(CreditMemo entity)
+        {
+            var transaction = new Transaction
+            {
+                TransactionId = entity.InvoiceId,
+                CompanyId = null,
+                TransactionTypeId = Constants.TransactionType.CreditMemo,
+                TransactionDate = Utility.GetDateTime(),
+                TransactionNumber = entity.InvoiceNumber + "/" + entity.CreditMemoNumber,
+                ContactType = Constants.ContactType.Customer,
+                ContactId = entity.CustomerId,
+                BankAccountId = Constants.Account.AccountReceiveable,
+                DebitAmount = 0,
+                CreditAmount = entity.DiffAmmount,
+                CreationDate = Utility.GetDateTime(),
+                ModifyDate = null,
+                Status = Constants.TransactionStatus.Paid,
+
+                isForTransEntry = true
+            };
+
+            return transaction;
+        }
+
+        public static Transaction CreateByCreditMemoItemsAndTax(CreditMemo entity, int AccId, decimal? amount)
+        {
+            var transaction = new Transaction
+            {
+                TransactionId = entity.InvoiceId,
+                CompanyId = null,
+                TransactionTypeId = Constants.TransactionType.CreditMemo,
+                TransactionDate = Utility.GetDateTime(),
+                TransactionNumber = entity.InvoiceNumber + "/"+ entity.CreditMemoNumber,
+                ContactType = Constants.ContactType.Customer,
+                ContactId = entity.CustomerId,
+                BankAccountId = AccId,
+                DebitAmount = amount ?? 0,
+                CreditAmount = 0,
+                CreationDate = Utility.GetDateTime(),
+                ModifyDate = null,
+                Status = Constants.TransactionStatus.Paid,
+                isForTransEntry = false
+            };
+
+            return transaction;
+        }
     }
 }
 

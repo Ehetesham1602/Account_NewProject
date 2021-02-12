@@ -521,8 +521,6 @@ namespace AccountErp.DataLayer.Migrations
 
                     b.Property<int>("CustomerId");
 
-                    b.Property<decimal>("DiffAmmount");
-
                     b.Property<decimal?>("Discount")
                         .HasColumnType("NUMERIC(12,2)");
 
@@ -538,10 +536,6 @@ namespace AccountErp.DataLayer.Migrations
 
                     b.Property<decimal?>("LineAmountSubTotal")
                         .HasColumnType("NUMERIC(12,2)");
-
-                    b.Property<decimal>("NewAmmount");
-
-                    b.Property<decimal>("OldAmmount");
 
                     b.Property<decimal?>("PoSoNumber")
                         .HasColumnType("NUMERIC(12,2)");
@@ -585,16 +579,10 @@ namespace AccountErp.DataLayer.Migrations
 
                     b.Property<int>("CreditMemoId");
 
-                    b.Property<decimal>("DiffAmmount");
-
                     b.Property<decimal>("LineAmount")
                         .HasColumnType("NUMERIC(12,2)");
 
-                    b.Property<decimal>("NewAmmount");
-
                     b.Property<int>("NewQuantity");
-
-                    b.Property<decimal>("OldAmmount");
 
                     b.Property<int>("OldQuantity");
 
