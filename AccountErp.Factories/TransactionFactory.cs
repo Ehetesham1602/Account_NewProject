@@ -211,7 +211,7 @@ namespace AccountErp.Factories
                 ContactId = entity.CustomerId,
                 BankAccountId = Constants.Account.AccountReceiveable,
                 DebitAmount = 0,
-                CreditAmount = entity.TotalAmount,
+                CreditAmount = entity.DiffAmmount,
                 CreationDate = Utility.GetDateTime(),
                 ModifyDate = null,
                 Status = Constants.TransactionStatus.Paid,

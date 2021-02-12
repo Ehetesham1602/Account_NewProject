@@ -44,17 +44,19 @@ namespace AccountErp.Managers
                 await _transactionRepository.AddAsync(transaction);
                 await _unitOfWork.SaveChangesAsync();
 
-                var itemsList = (model.CreditMemoService.GroupBy(l => l.BankAccountId, l => new { l.BankAccountId, l.LineAmount })
+                var itemsList = (model.CreditMemoService.GroupBy(l => l.BankAccountId, l => new { l.BankAccountId, l.DiffAmmount })
             .Select(g => new { GroupId = g.Key, Values = g.ToList() })).ToList();
 
                 foreach (var item in itemsList)
                 {
                     var id = item.GroupId;
-                    var amount = item.Values.Sum(x => x.LineAmount);
-
-                    var itemsData = TransactionFactory.CreateByCreditMemoItemsAndTax(creditMemo, id, amount);
-                    await _transactionRepository.AddAsync(itemsData);
-                    await _unitOfWork.SaveChangesAsync();
+                    var amount = item.Values.Sum(x => x.DiffAmmount);
+                    if (amount > 0)
+                    {
+                        var itemsData = TransactionFactory.CreateByCreditMemoItemsAndTax(creditMemo, id, amount);
+                        await _transactionRepository.AddAsync(itemsData);
+                        await _unitOfWork.SaveChangesAsync();
+                    }
                 }
 
                 var taxlistList = (model.CreditMemoService.GroupBy(l => l.TaxBankAccountId, l => new { l.TaxBankAccountId, l.TaxPrice })
@@ -66,10 +68,13 @@ namespace AccountErp.Managers
                     {
                         var id = tax.GroupId;
                         var amount = tax.Values.Sum(x => x.TaxPrice);
-
-                        var taxData = TransactionFactory.CreateByCreditMemoItemsAndTax(creditMemo, id, amount);
-                        await _transactionRepository.AddAsync(taxData);
-                        await _unitOfWork.SaveChangesAsync();
+                        if(amount > 0)
+                        {
+                            var taxData = TransactionFactory.CreateByCreditMemoItemsAndTax(creditMemo, id, amount);
+                            await _transactionRepository.AddAsync(taxData);
+                            await _unitOfWork.SaveChangesAsync();
+                        }
+                       
                     }
 
                 }
