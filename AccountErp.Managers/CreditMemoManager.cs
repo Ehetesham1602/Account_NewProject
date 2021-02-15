@@ -59,7 +59,7 @@ namespace AccountErp.Managers
                     }
                 }
 
-                var taxlistList = (model.CreditMemoService.GroupBy(l => l.TaxBankAccountId, l => new { l.TaxBankAccountId, l.TaxPrice })
+                var taxlistList = (model.CreditMemoService.GroupBy(l => l.TaxBankAccountId, l => new { l.TaxBankAccountId, l.TaxDiffAmmount })
            .Select(g => new { GroupId = g.Key, Values = g.ToList() })).ToList();
 
                 foreach (var tax in taxlistList)
@@ -67,7 +67,7 @@ namespace AccountErp.Managers
                     if (tax.GroupId > 0)
                     {
                         var id = tax.GroupId;
-                        var amount = tax.Values.Sum(x => x.TaxPrice);
+                        var amount = tax.Values.Sum(x => x.TaxDiffAmmount);
                         if(amount > 0)
                         {
                             var taxData = TransactionFactory.CreateByCreditMemoItemsAndTax(creditMemo, id, amount);
