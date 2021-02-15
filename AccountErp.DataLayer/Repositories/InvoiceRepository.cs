@@ -243,6 +243,7 @@ namespace AccountErp.DataLayer.Repositories
                               InvoiceNumber = i.InvoiceNumber,
                               SubTotal = i.SubTotal,
                               InvoiceType = i.InvoiceType,
+                              Status = i.Status,
                               Customer = new CustomerDetailDto
                               {
                                   FirstName = c.FirstName,
