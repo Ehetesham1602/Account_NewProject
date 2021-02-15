@@ -37,12 +37,13 @@ namespace AccountErp.Managers
             var count = await _creaditmemoRepository.getCount();
             var creditMemo = CreditMemoFactory.Create(model, _userId, count);
             await _creaditmemoRepository.AddAsync(creditMemo);
+            await _unitOfWork.SaveChangesAsync();
+
             if (creditMemo.Status == Constants.InvoiceStatus.Paid)
             {
                 await _unitOfWork.SaveChangesAsync();
                 var transaction = TransactionFactory.CreateByCreditMemo(creditMemo);
                 await _transactionRepository.AddAsync(transaction);
-                await _unitOfWork.SaveChangesAsync();
 
                 var itemsList = (model.CreditMemoService.GroupBy(l => l.BankAccountId, l => new { l.BankAccountId, l.DiffAmmount })
             .Select(g => new { GroupId = g.Key, Values = g.ToList() })).ToList();
