@@ -19,6 +19,7 @@ namespace AccountErp.Managers
         private readonly IItemRepository _itemRepository;
         private readonly IVendorRepository _vendorRepository;
         private readonly ITransactionRepository _transactionRepository;
+        private readonly IProjectRepository _projectRepository;
         private readonly IUnitOfWork _unitOfWork;
 
         private readonly string _userId;
@@ -26,13 +27,14 @@ namespace AccountErp.Managers
         public BillManager(IHttpContextAccessor contextAccessor,
             IBillRepository repository, IItemRepository itemRepository,
             IVendorRepository vendorRepository, ITransactionRepository transactionRepository,
-            IUnitOfWork unitOfWork)
+            IProjectRepository projectRepository,IUnitOfWork unitOfWork)
         {
             _userId = contextAccessor.HttpContext.User.GetUserId();
             _repository = repository;
             _itemRepository = itemRepository;
             _vendorRepository = vendorRepository;
             _transactionRepository = transactionRepository;
+            _projectRepository = projectRepository;
             _unitOfWork = unitOfWork;
         }
 
@@ -60,8 +62,15 @@ namespace AccountErp.Managers
             var count = await _repository.getCount();
             var bill = BillFactory.Create(model, _userId, count);
             await _repository.AddAsync(bill);
-
             await _unitOfWork.SaveChangesAsync();
+
+            //Project Entry
+            if(model.isProject)
+            {
+                await _projectRepository.AddProjectTransactionAsync(ProjectFactory.CreateByBill(model, bill.Id, _userId));
+                await _unitOfWork.SaveChangesAsync();
+            }
+
             var transaction = TransactionFactory.CreateByBill(bill);
             await _transactionRepository.AddAsync(transaction);
             await _unitOfWork.SaveChangesAsync();

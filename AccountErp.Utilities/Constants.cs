@@ -20,6 +20,7 @@
         public enum TransactionStatus { Pending, Paid }
 
         public enum InvoiceType { Service, Product }
+        public enum ProjectTransactionType { Invoice, Bill }
         public struct Account
         {
             public const int AccountReceiveable = 1;

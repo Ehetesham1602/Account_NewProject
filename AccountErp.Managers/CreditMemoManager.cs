@@ -39,7 +39,7 @@ namespace AccountErp.Managers
             await _creaditmemoRepository.AddAsync(creditMemo);
             await _unitOfWork.SaveChangesAsync();
 
-            if (creditMemo.Status == Constants.InvoiceStatus.Paid)
+            if (model.Status == Constants.InvoiceStatus.Paid)
             {
                 await _unitOfWork.SaveChangesAsync();
                 var transaction = TransactionFactory.CreateByCreditMemo(creditMemo);

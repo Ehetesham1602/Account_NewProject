@@ -55,6 +55,8 @@ namespace AccountErp.DataLayer
         public DbSet<CreditMemo> CreditMemo { get; set; }
 
         public DbSet<CreditMemoService> CreditMemoService { get; set; }
+        public DbSet<Project> Project { get; set; }
+        public DbSet<ProjectTransaction> ProjectTransactions { get; set; }
 
 
 
@@ -101,6 +103,8 @@ namespace AccountErp.DataLayer
             modelBuilder.ApplyConfiguration(new ScreenDetailConfiguration());
             modelBuilder.ApplyConfiguration(new CreditMemoConfiguration());
             modelBuilder.ApplyConfiguration(new CreditMemoServiceConfiguration());
+            modelBuilder.ApplyConfiguration(new ProjectConfiguration());
+            modelBuilder.ApplyConfiguration(new ProjectTransactionConfiguration());
 
 
 

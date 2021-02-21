@@ -203,7 +203,7 @@ namespace AccountErp.DataLayer.Repositories
                                           TaxPercentage = x.TaxPercentage,
                                           LineAmount = x.LineAmount,
                                           BankAccountId = x.Product.BankAccountId,
-                                          TaxBankAccountId = x.Product.BankAccountId
+                                          TaxBankAccountId = x.Taxes.BankAccountId
                                       })
                                      ,
                                      Attachments = i.Attachments.Select(x => new InvoiceAttachmentDto
@@ -282,7 +282,7 @@ namespace AccountErp.DataLayer.Repositories
                                           TaxPercentage = x.TaxPercentage,
                                           LineAmount = x.LineAmount,
                                           BankAccountId = x.Product.BankAccountId,
-                                          TaxBankAccountId = x.Product.BankAccountId
+                                          TaxBankAccountId = x.Taxes.BankAccountId
                                       })
                                      ,
                               Attachments = i.Attachments.Select(x => new InvoiceAttachmentDto
@@ -338,7 +338,7 @@ namespace AccountErp.DataLayer.Repositories
                                 
                                 
                             })
-                            .AsNoTracking();
+                            .AsNoTracking().GroupBy(p => p.Id).Select(grp => grp.FirstOrDefault());
 
             var sortExpresstion = model.GetSortExpression();
 

@@ -21,6 +21,7 @@ namespace AccountErp.Managers
         private readonly ITransactionRepository _transactionRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly ICreditMemoRepository _creditMemoRepository;
+        private readonly IProjectRepository _ProjectRepository;
 
         private readonly string _userId;
 
@@ -30,7 +31,8 @@ namespace AccountErp.Managers
             IItemRepository itemRepository,
              ITransactionRepository transactionRepository,
             ICustomerRepository customerRepository,
-           ICreditMemoRepository creditMemoRepository )
+           ICreditMemoRepository creditMemoRepository,
+           IProjectRepository projectRepository)
         {
             _userId = contextAccessor.HttpContext.User.GetUserId();
             _invoiceRepository = invoiceRepository;
@@ -39,6 +41,7 @@ namespace AccountErp.Managers
             _transactionRepository = transactionRepository;
             _creditMemoRepository = creditMemoRepository;
             _unitOfWork = unitOfWork;
+            _ProjectRepository = projectRepository;
         }
 
         public async Task AddAsync(InvoiceAddModel model)
@@ -61,6 +64,8 @@ namespace AccountErp.Managers
             //{
             //    model.TotalAmount = model.TotalAmount + (model.Tax ?? 0);
             //}
+
+          
             model.LineAmountSubTotal = model.Items.Sum(x => x.LineAmount);
 
             var count = await _invoiceRepository.getCount();
@@ -71,6 +76,18 @@ namespace AccountErp.Managers
             var invoice = InvoiceFactory.Create(model, _userId, count);
             await _invoiceRepository.AddAsync(invoice);
             await _unitOfWork.SaveChangesAsync();
+
+            //SaveProject
+
+            var projectData =await _ProjectRepository.GetAsyncByCustId(model.CustomerId);
+            if (projectData != null)
+            {
+                await _ProjectRepository.AddProjectTransactionAsync(ProjectFactory.CreateByInvoice(invoice, projectData.Id, _userId));
+            await _unitOfWork.SaveChangesAsync();
+            }
+
+
+
             var transaction = TransactionFactory.CreateByInvoice(invoice);
             await _transactionRepository.AddAsync(transaction);
             await _unitOfWork.SaveChangesAsync();

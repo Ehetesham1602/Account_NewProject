@@ -22,6 +22,8 @@ namespace AccountErp.Models.Bill
         public decimal? PoSoNumber { get; set; }
         public decimal? SubTotal { get; set; }
         public decimal? LineAmountSubTotal { get; set; }
+        public int ProjectId { get; set; }
+        public bool isProject { get; set; }
         public Constants.InvoiceType BillType { get; set; }
         [Required]
         public List<BillServiceModel> Items { get; set; }
